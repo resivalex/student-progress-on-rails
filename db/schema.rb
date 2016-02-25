@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225172447) do
+ActiveRecord::Schema.define(version: 20160225224725) do
 
   create_table "auditories", force: :cascade do |t|
     t.string "name"
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 20160225172447) do
   create_table "mark_tracks", force: :cascade do |t|
     t.string   "name"
     t.integer  "mark_id"
-    t.datetime "time"
     t.text     "comment"
+    t.datetime "created_at"
   end
 
   add_index "mark_tracks", ["mark_id"], name: "index_mark_tracks_on_mark_id"
