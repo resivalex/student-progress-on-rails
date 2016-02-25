@@ -12,13 +12,6 @@ RSpec.describe UsersController, :type => :controller do
       get :index
       expect(response).to render_template("index")
     end
-
-    # it "loads all of the posts into @posts" do
-    #   post1, post2 = User.create!, User.create!
-    #   get :index
-
-    #   expect(assigns(:posts)).to match_array([post1, post2])
-    # end
   end
 end
 
