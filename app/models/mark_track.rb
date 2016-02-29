@@ -4,5 +4,5 @@ class MarkTrack < ActiveRecord::Base
 	validates :name, presence: true, inclusion: { in: MARKS }
 	validates :comment, length: { maximum: 200 }
 
-	belong_to :mark, inverse_of: :mark_tracks
+	belong_to :mark, inverse_of: :mark_tracks, dependent: :destroy
 end

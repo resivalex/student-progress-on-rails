@@ -1,0 +1,21 @@
+doctype 5
+html
+    head
+        title resivalex.com
+
+        script
+            |   function move() {
+            |       var body = document.getElementById('rand');
+            |       var s = body.innerHTML;
+            |       var magic = 34527;
+            |       s = s.substr(magic, s.length - 1) + s.substr(0, magic);
+            |       body.innerHTML = s;
+            |   }
+            |   setInterval(move, 50);
+
+
+    body style="font-family:monospace; word-break:break-all; font-size:10px;"
+        div#rand
+            - 100000.times do
+                = Random.rand(10).to_s
+    
