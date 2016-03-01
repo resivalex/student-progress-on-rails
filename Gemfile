@@ -49,5 +49,11 @@ group :development, :test do
 
   # Testing framework
   gem 'rspec-rails'
+
+  # Acceptance test framework
+  gem 'capybara'
+
+  # Fixtures replacement
+  gem 'factory_girl_rails'
 end
 
