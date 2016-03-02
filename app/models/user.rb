@@ -12,5 +12,11 @@ class User < ActiveRecord::Base
   validates :phone , length: { maximum: 25 },
             format: { with: /(\d.*){5,}/, message: 'contains less than 5 digits'}
 
-  # has_many :lessons, inverse_of: :teacher
+  def admin?
+    role == 'admin'
+  end
+
+  def teacher?
+    role == 'teacher'
+  end
 end
