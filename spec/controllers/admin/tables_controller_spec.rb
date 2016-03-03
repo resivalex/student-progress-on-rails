@@ -42,8 +42,8 @@ describe Admin::TablesController do
         response.body
       end
 
-      it { is_expected.to match mark_track.name }
-      it { is_expected.to match mark_track.comment }
+      it { should match mark_track.name }
+      it { should match mark_track.comment }
     end
 
     context "one user" do
@@ -60,11 +60,11 @@ describe Admin::TablesController do
         response.body
       end
 
-      it { is_expected.to match @us.email }
-      it { is_expected.to match @us.first_name }
-      it { is_expected.to match @us.last_name }
-      it { is_expected.to match @us.login }
-      it { is_expected.to match @us.phone }
+      it { should match @us.email }
+      it { should match @us.first_name }
+      it { should match @us.last_name }
+      it { should match @us.login }
+      it { should match @us.phone }
     end
 
     context "one lesson" do
@@ -78,7 +78,7 @@ describe Admin::TablesController do
       end
 
       it "contains lesson time" do
-        is_expected.to match @lesson.time.to_s
+        should match @lesson.time.to_s
       end
     end
   end

@@ -49,6 +49,7 @@ group :development, :test do
 
   # Testing framework
   gem 'rspec-rails'
+  gem 'rspec-its'
 
   # Acceptance test framework
   gem 'capybara'

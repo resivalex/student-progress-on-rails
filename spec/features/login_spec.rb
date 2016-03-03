@@ -7,14 +7,6 @@ describe 'login page' do
     FactoryGirl.create :student
   end
 
-  describe 'login form' do
-    subject { page }
-
-    it { is_expected.to have_selector 'input#login' }
-    it { is_expected.to have_selector 'input#password' }
-    it { is_expected.to have_selector 'input[type=submit]'}
-  end
-
   context 'right login/password pair' do
     subject do
       fill_in 'login', with: user.login
@@ -23,8 +15,8 @@ describe 'login page' do
       page
     end
 
-    it { expect(subject.current_path).to eql '/' }
-    it { is_expected.to have_content 'Success!' }
+    its(:current_path) { should eql '/' }
+    it { should have_content 'Success!' }
   end
 
   context 'wrong login/password pair' do
@@ -35,7 +27,7 @@ describe 'login page' do
       page
     end
 
-    it { expect(subject.current_path).to eql '/login' }
-    it { is_expected.to have_content 'You are wrong. Try again.' }
+    its(:current_path) { should eql '/login' }
+    it { should have_content 'You are wrong. Try again.' }
   end
 end
