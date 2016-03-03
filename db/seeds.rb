@@ -16,3 +16,14 @@ User.create({
   role: 'student',
   phone: '343434',
 })
+
+User.create({
+  first_name: 'Ivan',
+  last_name: 'Reshetnikov',
+  patronymic: 'Alexandrovich',
+  login: 'admin',
+  password: '343434',
+  email: 'ivan2@example.com',
+  role: 'admin',
+  phone: '3434343',
+})

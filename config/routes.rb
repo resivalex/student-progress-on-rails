@@ -9,12 +9,12 @@ Rails.application.routes.draw do
 
   get '/login' => 'login#index'
 
-  get '/admin' => 'admin#index'
-  get '/admin/(*tail)' => 'admin#index'
-
   scope :admin do
     resources :tables, only: [:index, :show]
   end
+
+  get '/admin' => 'admin#index'
+  get '/admin/(*tail)' => 'admin#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

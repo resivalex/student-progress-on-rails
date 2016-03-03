@@ -9,4 +9,9 @@ FactoryGirl.define do
     role 'student'
     phone '343434'
   end
+
+  factory :mark_track do
+    name 5
+    comment 'Excellent'
+  end
 end

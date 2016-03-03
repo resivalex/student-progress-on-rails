@@ -1,0 +1,8 @@
+- %w[users lessons marks mark_tracks].each do |table_name|
+  h1 = table_name
+
+table
+  - @mark_tracks.each do |track|
+    tr
+      td = track.name
+      td = track.comment

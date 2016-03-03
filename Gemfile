@@ -55,5 +55,8 @@ group :development, :test do
 
   # Fixtures replacement
   gem 'factory_girl_rails'
+
+  # Autorun rspec on save
+  gem 'guard-rspec', require: false
 end
 
