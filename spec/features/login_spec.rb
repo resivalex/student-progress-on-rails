@@ -4,7 +4,7 @@ describe 'login page' do
   end
 
   let :user do
-    FactoryGirl.create :user, login: 'student', password: '123456'
+    FactoryGirl.create :student
   end
 
   describe 'login form' do

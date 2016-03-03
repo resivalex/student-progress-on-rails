@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get '/login' => 'login#index'
 
-  scope :admin do
+  namespace :admin do
     resources :tables, only: [:index, :show]
   end
 

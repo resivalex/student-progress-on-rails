@@ -16,9 +16,8 @@ private
 
   def check_permissions
     if not admin?
+      flash[:message] = 'You aren\'t admin'
       redirect_to '/'
-    else
-      render :index
     end
   end
 end

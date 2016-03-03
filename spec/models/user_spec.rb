@@ -1,7 +1,7 @@
 describe User do
   context "in admin role" do
     subject do
-      FactoryGirl.build :user, role: 'admin'
+      FactoryGirl.build :admin
     end
 
     it { is_expected.to be_admin }
@@ -10,7 +10,7 @@ describe User do
 
   context "in teacher role" do
     subject do
-      FactoryGirl.build :user, role: 'teacher'
+      FactoryGirl.build :teacher
     end
 
     it { is_expected.to be_teacher }
