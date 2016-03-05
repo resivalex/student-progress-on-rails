@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
@@ -26,6 +25,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # HTML templates
 gem 'slim'
+
+# Assets
+source 'http://rails-assets.org' do
+  # AngularJS
+  gem 'rails-assets-angular'
+end
 
 
 # Use ActiveModel has_secure_password
@@ -53,6 +58,7 @@ group :development, :test do
 
   # Acceptance test framework
   gem 'capybara'
+  gem 'capybara-angular'
 
   # Fixtures replacement
   gem 'factory_girl_rails'
@@ -60,4 +66,3 @@ group :development, :test do
   # Autorun rspec on save
   gem 'guard-rspec', require: false
 end
-
