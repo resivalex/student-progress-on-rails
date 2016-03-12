@@ -1,5 +1,6 @@
 Table of contents
-- [Rest API](#rest-api)
+- [JSON Rest API](#json-rest-api)
+  - [HTTP status codes](#http-status-codes)
   - [POST /auditories](#post-auditories)
   - [GET /auditories](#get-auditories)
   - [PUT /auditories/:id](#put-auditoriesid)
@@ -15,6 +16,8 @@ Table of contents
   - [DELETE /lessons/:id](#delete-lessonsid)
   - [POST /marks](#post-marks)
   - [GET /marks](#get-marks)
+  - [GET /marks/:id](#get-marks-id)
+  - [GET /marks/:id/tracks](#get-marksidtracks)
   - [GET /students](#get-students)
   - [GET /students/:id/marks](#get-studentsidmarks)
   - [POST /subjects](#post-subjects)
@@ -27,11 +30,19 @@ Table of contents
   - [GET /users](#get-users)
   - [PUT /users/:id](#put-usersid)
   - [DELETE /users/:id](#delete-usersid)
+  - [GET /users/:id](#get-usersid)
 
-## Rest API
+## JSON Rest API
+
+
+### HTTP status codes
+- `200: OK`
+- `401: Unauthorized`
+- `403: Forbidden`
+- `404: Not Found`
 
 ### POST /auditories
-Example request `POST /auditories`
+Example request `POST /auditories.json`
 ```
 {
   "name": "313",
@@ -39,7 +50,7 @@ Example request `POST /auditories`
 }
 ```
 ### GET /auditories
-Example request `GET /auditories`
+Example request `GET /auditories.json`
 
 Example result
 ```
@@ -57,7 +68,7 @@ Example result
 ]
 ```
 ### PUT /auditories/:id
-Example request `UPDATE /auditories/5`
+Example request `UPDATE /auditories/5.json`
 ```
 {
   "name": "215-a",
@@ -65,9 +76,9 @@ Example request `UPDATE /auditories/5`
 }
 ```
 ### DELETE /auditories/:id
-Example request `DELETE /auditories/7`
+Example request `DELETE /auditories/7.json`
 ### POST /groups
-Example request `POST /groups`
+Example request `POST /groups.json`
 ```
 {
   "name": "081-1004",
@@ -75,7 +86,7 @@ Example request `POST /groups`
 }
 ```
 ### GET /groups
-Example request `GET /groups`
+Example request `GET /groups.json`
 
 Example result
 ```
@@ -93,7 +104,7 @@ Example result
 ]
 ```
 ### PUT /groups/:id
-Example request `UPDATE /groups/4`
+Example request `UPDATE /groups/4.json`
 ```
 {
   "name": "081-1004",
@@ -101,9 +112,9 @@ Example request `UPDATE /groups/4`
 }
 ```
 ### DELETE /groups/:id
-Example request `DELETE /groups/7`
+Example request `DELETE /groups/7.json`
 ### GET /groups/:id/students
-Example request `GET /groups/4/students`
+Example request `GET /groups/4/students.json`
 
 Example result
 ```
@@ -117,7 +128,7 @@ Example result
 ]
 ```
 ### POST /lessons
-Example request `POST /lessons`
+Example request `POST /lessons.json`
 ```
 {
   "groupId": 2,
@@ -128,7 +139,7 @@ Example request `POST /lessons`
 }
 ```
 ### GET /lessons
-Example request `GET /lessons`
+Example request `GET /lessons.json`
 
 Example result
 ```
@@ -144,7 +155,7 @@ Example result
 ]
 ```
 ### PUT /lessons/:id
-Example request `GET /lessons/6`
+Example request `GET /lessons/6.json`
 ```
 {
   "groupId": 2,
@@ -155,34 +166,65 @@ Example request `GET /lessons/6`
 }
 ```
 ### DELETE /lessons/:id
-Example request `DELETE /lessons/6`
+Example request `DELETE /lessons/6.json`
 ### POST /marks
-Example request `POST /marks`
+Example request `POST /marks.json`
 ```
 {
   "mark": "4",
+  "comment": "Well",
   "lessonId": 22,
   "studentId", 5
 }
 ```
 ### GET /marks
-Example request `GET /marks`
+Example request `GET /marks.json`
 ```
 [
   {
     "id": 55,
-    "lastMark": "4",
+    "mark": "4",
+    "comment": "Well",
     "lessonId": 22
   },
   {
     "id": 56,
-    "lastMark": "н",
+    "mark": "н",
+    "comment": "Absent"
     "lessonId": 27
   }
 ]
 ```
+### GET /marks/:id
+Example request `GET /marks/55.json`
+
+Example result
+```
+{
+  "mark": "4",
+  "lessonId": 22
+}
+```
+### GET /marks/:id/tracks
+Example request `GET /marks/55/tracks.json`
+
+Example result
+```
+[
+  {
+    "mark": "2",
+    "comment": "No book"
+    "datetime": "2016-04-03T17:06:34+03"
+  },
+  {
+    "mark": "4",
+    "comment": "",
+    "datetime": "2016-04-05T12:20:57+03"
+  }
+]
+```
 ### GET /students
-Example request `GET /students`
+Example request `GET /students.json`
 
 Example result
 ```
@@ -202,23 +244,23 @@ Example result
 ]
 ```
 ### GET /students/:id/marks
-Example request `GET /students/5/marks`
+Example request `GET /students/5/marks.json`
 ```
 [
   {
     "id": 55,
-    "lastMark": "4",
+    "mark": "4",
     "lessonId": 22
   },
   {
     "id": 56,
-    "lastMark": "н",
+    "mark": "н",
     "lessonId": 27
   }
 ]
 ```
 ### POST /subjects
-Example request `POST /subjects`
+Example request `POST /subjects.json`
 ```
 {
   "name": "History",
@@ -226,7 +268,7 @@ Example request `POST /subjects`
 }
 ```
 ### GET /subjects
-Example request `GET /subjects`
+Example request `GET /subjects.json`
 
 Example result
 ```
@@ -244,7 +286,7 @@ Example result
 ]
 ```
 ### PUT /subjects/:id
-Example request `UPDATE /subjects/3`
+Example request `UPDATE /subjects/3.json`
 ```
 {
   "name": "Computer graphics",
@@ -252,34 +294,34 @@ Example request `UPDATE /subjects/3`
 }
 ```
 ### DELETE /subjects/:id
-Example request `DELETE /subjects/3`
+Example request `DELETE /subjects/3.json`
 ### GET /teachers
-Example request `GET /teachers`
+Example request `GET /teachers.json`
 
 Example result
 ```
 [
   {
     "id": 55,
-    "lastMark": "4",
+    "mark": "4",
     "lessonId": 22
   },
   {
     "id": 56,
-    "lastMark": "н",
+    "mark": "н",
     "lessonId": 27
   }
 ]
 ```
 ### GET /teachers/:id/marks
-Example request `GET /teachers/10/marks`
+Example request `GET /teachers/10/marks.json`
 
 Example result
 ```
 [
   {
     "id": 55,
-    "lastMark": "4",
+    "mark": "4",
     "lessonId": 22
   }
 ]
@@ -292,11 +334,13 @@ Example result
   "lastName": "Reshetnikov",
   "patronymic": "Alexandrovich",
   "email": "mail@example.com",
+  "login": "login1",
   "password": "p455w0rd",
+  "phone": "123-456"
 }
 ```
 ### GET /users
-Example request `GET /users`
+Example request `GET /users.json`
 
 Example result
 ```
@@ -307,20 +351,41 @@ Example result
     "lastName": "Reshetnikov",
     "patronymic": "Alexandrovich",
     "email": "mail@example.com",
-    "role": "student"
+    "login": "login1",
+    "role": "student",
+    "phone": "123-456"
   }
 ]
 ```
 ### PUT /users/:id
-Example request `PUT /users/3`
+Example request `PUT /users/3.json`
 ```
 {
   "firstName": "Ivan",
   "lastName": "Reshetnikov",
   "patronymic": "Alexandrovich",
   "email": "another@example.com",
-  "password": "p455w0rd"
+  "login": "login1",
+  "password": "p455w0rd",
+  "phone": "123-456"
 }
 ```
 ### DELETE /users/:id
-Example request `DELETE /users/3`
+Example request `DELETE /users/3.json`
+
+### GET /users/:id
+Example request `GET /users/3.json`
+
+Example result
+```
+{
+  "id": 3,
+  "firstName": "Ivan",
+  "lastName": "Reshetnikov",
+  "patronymic": "Alexandrovich",
+  "email": "mail@example.com",
+  "login": "login1",
+  "role": "student",
+  "phone": "123-456"
+}
+```

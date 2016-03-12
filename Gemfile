@@ -32,6 +32,10 @@ source 'http://rails-assets.org' do
   gem 'rails-assets-angular'
 end
 
+# JSON
+gem 'rabl'
+gem 'oj'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get '/login' => 'login#index'
 
+  resources 'users'
+
   namespace :admin do
     resources :tables, only: [:index, :show]
   end

@@ -19,4 +19,30 @@ class User < ActiveRecord::Base
   def teacher?
     role == 'teacher'
   end
+
+  def to_api
+    {
+      id: id,
+      firstName: first_name,
+      lastName: last_name,
+      patronymic: patronymic,
+      login: login,
+      password: password,
+      role: role,
+      email: email,
+      phone: phone
+    }
+  end
+
+  def from_api data
+    send :first_name=, data[:firstName]
+    send :last_name=, data[:lastName]
+    send :patronymic=, data[:patronymic]
+    send :login=, data[:login]
+    send :password=, data[:password]
+    send :role=, data[:role]
+    send :email=, data[:email]
+    send :phone=, data[:phone]
+    self
+  end
 end
