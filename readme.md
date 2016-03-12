@@ -1,3 +1,33 @@
+Table of contents
+- [Rest API](#rest-api)
+  - [POST /auditories](#post-auditories)
+  - [GET /auditories](#get-auditories)
+  - [PUT /auditories/:id](#put-auditoriesid)
+  - [DELETE /auditories/:id](#delete-auditoriesid)
+  - [POST /groups](#post-groups)
+  - [GET /groups](#get-groups)
+  - [PUT /groups/:id](#put-groupsid)
+  - [DELETE /groups/:id](#delete-groupsid)
+  - [GET /groups/:id/students](#get-groupsidstudents)
+  - [POST /lessons](#post-lessons)
+  - [GET /lessons](#get-lessons)
+  - [PUT /lessons/:id](#put-lessonsid)
+  - [DELETE /lessons/:id](#delete-lessonsid)
+  - [POST /marks](#post-marks)
+  - [GET /marks](#get-marks)
+  - [GET /students](#get-students)
+  - [GET /students/:id/marks](#get-studentsidmarks)
+  - [POST /subjects](#post-subjects)
+  - [GET /subjects](#get-subjects)
+  - [PUT /subjects/:id](#put-subjectsid)
+  - [DELETE /subjects/:id](#delete-subjectsid)
+  - [GET /teachers](#get-teachers)
+  - [GET /teachers/:id/marks](#get-teachersidmarks)
+  - [POST /users](#post-users)
+  - [GET /users](#get-users)
+  - [PUT /users/:id](#put-usersid)
+  - [DELETE /users/:id](#delete-usersid)
+
 ## Rest API
 
 ### POST /auditories
@@ -10,6 +40,7 @@ Example request `POST /auditories`
 ```
 ### GET /auditories
 Example request `GET /auditories`
+
 Example result
 ```
 [
@@ -45,6 +76,7 @@ Example request `POST /groups`
 ```
 ### GET /groups
 Example request `GET /groups`
+
 Example result
 ```
 [
@@ -72,6 +104,7 @@ Example request `UPDATE /groups/4`
 Example request `DELETE /groups/7`
 ### GET /groups/:id/students
 Example request `GET /groups/4/students`
+
 Example result
 ```
 [
@@ -96,6 +129,7 @@ Example request `POST /lessons`
 ```
 ### GET /lessons
 Example request `GET /lessons`
+
 Example result
 ```
 [
@@ -120,6 +154,8 @@ Example request `GET /lessons/6`
   "datetime": "2016-04-03T17:00:00+03"
 }
 ```
+### DELETE /lessons/:id
+Example request `DELETE /lessons/6`
 ### POST /marks
 Example request `POST /marks`
 ```
@@ -147,6 +183,7 @@ Example request `GET /marks`
 ```
 ### GET /students
 Example request `GET /students`
+
 Example result
 ```
 [
@@ -190,6 +227,7 @@ Example request `POST /subjects`
 ```
 ### GET /subjects
 Example request `GET /subjects`
+
 Example result
 ```
 [
@@ -205,7 +243,7 @@ Example result
   }
 ]
 ```
-### UPDATE /subjects/:id
+### PUT /subjects/:id
 Example request `UPDATE /subjects/3`
 ```
 {
@@ -217,6 +255,7 @@ Example request `UPDATE /subjects/3`
 Example request `DELETE /subjects/3`
 ### GET /teachers
 Example request `GET /teachers`
+
 Example result
 ```
 [
@@ -234,6 +273,7 @@ Example result
 ```
 ### GET /teachers/:id/marks
 Example request `GET /teachers/10/marks`
+
 Example result
 ```
 [
@@ -257,6 +297,7 @@ Example result
 ```
 ### GET /users
 Example request `GET /users`
+
 Example result
 ```
 [
@@ -281,3 +322,5 @@ Example request `PUT /users/3`
   "password": "p455w0rd"
 }
 ```
+### DELETE /users/:id
+Example request `DELETE /users/3`
