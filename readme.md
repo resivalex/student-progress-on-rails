@@ -19,6 +19,7 @@ Table of contents
   - [GET /marks/:id](#get-marks-id)
   - [GET /marks/:id/tracks](#get-marksidtracks)
   - [GET /students](#get-students)
+  - [GET /students/:id](#get-studentsid)
   - [GET /students/:id/marks](#get-studentsidmarks)
   - [POST /subjects](#post-subjects)
   - [GET /subjects](#get-subjects)
@@ -243,6 +244,16 @@ Example result
   }
 ]
 ```
+### GET /students/:id
+Example request `GET /students/5.json`
+
+Example result
+```
+{
+  "firstName": "Ivan",
+  "lastName": "Reshetnikov",
+  "patronymic": "Alexandrovich"
+}
 ### GET /students/:id/marks
 Example request `GET /students/5/marks.json`
 ```

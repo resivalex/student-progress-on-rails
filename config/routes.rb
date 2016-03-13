@@ -9,7 +9,14 @@ Rails.application.routes.draw do
 
   get '/login' => 'login#index'
 
-  resources 'users'
+  resources :users
+  resources :auditories
+  resources :groups do
+    resources :students
+  end
+  resources :subjects
+  resources :students, only: [:index, :show]
+  resources :lessons
 
   namespace :admin do
     resources :tables, only: [:index, :show]

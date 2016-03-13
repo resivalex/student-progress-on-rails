@@ -1,7 +1,7 @@
 require 'rails_helper.rb'
 
 describe 'Users API' do
-  it 'lists users' do
+  it '#index' do
     FactoryGirl.create :user
 
     get '/users.json'
@@ -11,7 +11,7 @@ describe 'Users API' do
     expect(json.length).to eq 1
   end
 
-  it 'retrieves user' do
+  it '#show' do
     user = FactoryGirl.create :user
     get "/users/#{user.id}.json"
 
@@ -21,7 +21,7 @@ describe 'Users API' do
     expect(json['password']).to be_nil
   end
 
-  it 'creates user' do
+  it '#create' do
     user = FactoryGirl.build :user
     data = user.to_api
 
@@ -33,7 +33,7 @@ describe 'Users API' do
     expect(user.first_name).to eql data[:firstName]
   end
 
-  it 'updates user' do
+  it '#update' do
     user = FactoryGirl.create :user
     data = user.to_api
     data[:firstName] += '_'
@@ -44,17 +44,11 @@ describe 'Users API' do
     expect(User.take.first_name).to eql data[:firstName]
   end
 
-  it 'deletes user' do
+  it '#destroy' do
     user = FactoryGirl.create :user
 
     delete "/users/#{user.id}.json"
 
     expect(User.count).to eql 0
-  end
-
-  it 'not found' do
-    get '/users/notfound.json'
-
-    expect(response.status).to eql 404
   end
 end

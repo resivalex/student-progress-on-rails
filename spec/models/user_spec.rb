@@ -43,4 +43,12 @@ describe User do
 
     its(:first_name) { should eq data[:firstName] }
   end
+
+  describe '.students_by_group' do
+    include_context '3 students in 2 groups'
+
+    it 'one students in first group' do
+      expect(User.students_by_group(@groups[0].id).size).to eq 1
+    end
+  end
 end

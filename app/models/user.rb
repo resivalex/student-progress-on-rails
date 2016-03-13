@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   validates :phone , length: { maximum: 25 },
             format: { with: /(\d.*){5,}/, message: 'contains less than 5 digits'}
 
+  scope :students, -> { where(role: 'student') }
+
   def admin?
     role == 'admin'
   end
@@ -44,5 +46,20 @@ class User < ActiveRecord::Base
     send :email=, data[:email]
     send :phone=, data[:phone]
     self
+  end
+
+  def self.students_by_group group_id
+    Student.by_group(group_id).joins('JOIN users ON students.user_id = users.id')
+  end
+
+private
+
+  def only_full_name
+    {
+      id: id,
+      firstName: first_name,
+      lastName: last_name,
+      patronymic: patronymic
+    }
   end
 end
