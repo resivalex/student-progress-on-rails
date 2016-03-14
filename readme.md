@@ -90,6 +90,7 @@ Table of contents
     }
   ]
   ```
+
 - ### PUT /auditories/:id
   Example request `UPDATE /auditories/5.json`
   ```
@@ -100,8 +101,11 @@ Table of contents
   ```
 - ### DELETE /auditories/:id
   Example request `DELETE /auditories/7.json`
+
 - ### POST /groups
+
 - #### POST
+
 - #### GET
   Example request `POST /groups.json`
   ```
@@ -110,6 +114,7 @@ Table of contents
     "description": "2008 Computer science. Systems and technologies."
   }
   ```
+
 ### /groups
 - ### GET /groups
   Example request `GET /groups.json`
