@@ -17,14 +17,16 @@ describe 'Groups API' do
     end
 
     it 'group with one student' do
-      get "/groups/#{@groups[0].id}/students.json"
+      get "/groups/#{groups[0].id}/students.json"
 
+      expect(response).to be_success
       expect(json.length).to eq 1
     end
 
     it 'group with two students' do
-      get "/groups/#{@groups[1].id}/students.json"
+      get "/groups/#{groups[1].id}/students.json"
 
+      expect(response).to be_success
       expect(json.length).to eq 2
     end
   end

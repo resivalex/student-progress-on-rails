@@ -4,7 +4,7 @@ describe 'login page' do
   end
 
   let :user do
-    FactoryGirl.create :student
+    FactoryGirl.create :student_user
   end
 
   context 'right login/password pair' do

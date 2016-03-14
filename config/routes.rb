@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :subjects
   resources :students, only: [:index, :show]
   resources :lessons
+  resources :marks
 
   namespace :admin do
     resources :tables, only: [:index, :show]

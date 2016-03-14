@@ -1,10 +1,15 @@
 class Lesson < ActiveRecord::Base
-	validate :time_multiple_by_five_munutes?
-
 	belongs_to :group, inverse_of: :lessons
 	belongs_to :subject, inverse_of: :lessons
 	belongs_to :auditory, inverse_of: :lessons
 	belongs_to :teacher, class_name: 'User', foreign_key: 'user_id'
+
+	validates :group, presence: true
+	validates :subject, presence: true
+	validates :auditory, presence: true
+	validates :teacher, presence: true
+
+	validate :time_multiple_by_five_munutes?
 
 	def time_multiple_by_five_munutes?
 		unless time.sec == 0 and time.min % 5 == 0

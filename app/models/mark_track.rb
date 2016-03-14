@@ -5,4 +5,8 @@ class MarkTrack < ActiveRecord::Base
 	validates :comment, length: { maximum: 200 }
 
 	belongs_to :mark, inverse_of: :mark_tracks, dependent: :destroy
+
+  def self.last_by_mark_id mark_id
+    where(mark_id: mark_id).order(:created_at).last
+  end
 end

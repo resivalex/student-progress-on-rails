@@ -45,10 +45,10 @@ describe User do
   end
 
   describe '.students_by_group' do
-    include_context '3 students in 2 groups'
+    let(:student) { FactoryGirl.create :student }
 
     it 'one students in first group' do
-      expect(User.students_by_group(@groups[0].id).size).to eq 1
+      expect(User.students_by_group(student.group.id).size).to eq 1
     end
   end
 end

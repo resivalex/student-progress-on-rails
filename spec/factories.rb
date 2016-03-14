@@ -33,7 +33,7 @@ FactoryGirl.define do
     email { generate :email }
     phone { generate :phone }
 
-    factory :student do
+    factory :student_user do
       role 'student'
     end
 
@@ -50,16 +50,22 @@ FactoryGirl.define do
     end
   end
 
+  factory :student do
+    group
+    association :user, factory: :student_user
+  end
+
   factory :mark_track do
+    mark
     name 5
     comment 'Excellent'
   end
 
   factory :lesson do
-    group_id { generate :index }
-    user_id { generate :index }
-    subject_id { generate :index }
-    auditory_id { generate :index }
+    group
+    teacher
+    subject
+    auditory
     time Time.new 2016, 2, 22, 15, 20
   end
 
@@ -71,10 +77,25 @@ FactoryGirl.define do
   factory :group do
     name { generate :name }
     description { generate :description }
+
+    factory :with_students do
+      transient do
+        students_count 2
+      end
+
+      before(:create) do |group, evaluator|
+        create_list :student, evaluator.students_count
+      end
+    end
   end
 
   factory :subject do
     name { generate :name }
     description { generate :description }
+  end
+
+  factory :mark do
+    student
+    lesson
   end
 end

@@ -177,6 +177,7 @@ Table of contents
     "datetime": "2016-04-03T15:30:00+03"
   }
   ```
+
 - #### GET
   Example request `GET /lessons.json`
 
@@ -193,6 +194,7 @@ Table of contents
     }
   ]
   ```
+  
 - #### /:lesson_id
   - #### GET
     Example request `GET /lessons/6.json`

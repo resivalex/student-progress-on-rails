@@ -1,22 +1,11 @@
 RSpec.shared_context '2 students, admin and teacher' do
-  before do
-    @student1, @student2 = (1..2).map { FactoryGirl.create :student }
-    @admin = FactoryGirl.create :admin
-    FactoryGirl.create :teacher
-  end
+  let!(:students) { FactoryGirl.create_list :student_user, 2 }
+  let!(:admin) { FactoryGirl.create :admin }
+  let!(:teacher) { FactoryGirl.create :teacher }
 end
 
 RSpec.shared_context '3 students in 2 groups' do
-  before do
-    @groups = (1..2).map { FactoryGirl.create :group }
-    @students = (1..3).map do
-      student = Student.new
-      student.user = FactoryGirl.create :student
-      student
-    end
-    @students[0].group = @groups[0]
-    @students[1].group = @groups[1]
-    @students[2].group = @groups[1]
-    @students.each(&:save)
-  end
+    let!(:groups) { FactoryGirl.create_list :group, 2 }
+    let!(:one_student) { FactoryGirl.create :student, group: groups[0] }
+    let!(:two_students) { FactoryGirl.create_list :student, 2, group: groups[1] }
 end
