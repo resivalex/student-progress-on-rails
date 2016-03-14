@@ -65,7 +65,7 @@ Table of contents
 - `404: Not Found`
 
 ### /auditories
-  ### POST /auditories
+- ### POST /auditories
   Example request `POST /auditories.json`
   ```
   {
@@ -90,7 +90,7 @@ Table of contents
     }
   ]
   ```
-  ### PUT /auditories/:id
+- ### PUT /auditories/:id
   Example request `UPDATE /auditories/5.json`
   ```
   {
@@ -98,11 +98,11 @@ Table of contents
     "description": "Large auditory"
   }
   ```
-  ### DELETE /auditories/:id
+- ### DELETE /auditories/:id
   Example request `DELETE /auditories/7.json`
-  ### POST /groups
-  #### POST
-  #### GET
+- ### POST /groups
+- #### POST
+- #### GET
   Example request `POST /groups.json`
   ```
   {
@@ -111,7 +111,7 @@ Table of contents
   }
   ```
 ### /groups
-  ### GET /groups
+- ### GET /groups
   Example request `GET /groups.json`
 
   Example result
@@ -129,7 +129,7 @@ Table of contents
     }
   ]
   ```
-  ### PUT /groups/:id
+- ### PUT /groups/:id
   Example request `UPDATE /groups/4.json`
   ```
   {
@@ -137,9 +137,9 @@ Table of contents
     "description": "2008 FaI. Systems and technologies."
   }
   ```
-  ### DELETE /groups/:id
+- ### DELETE /groups/:id
   Example request `DELETE /groups/7.json`
-  ### GET /groups/:id/students
+- ### GET /groups/:id/students
   Example request `GET /groups/4/students.json`
 
   Example result
@@ -154,7 +154,7 @@ Table of contents
   ]
   ```
 ### /lessons
-  ### POST /lessons
+- ### POST /lessons
   Example request `POST /lessons.json`
   ```
   {
@@ -165,7 +165,7 @@ Table of contents
     "datetime": "2016-04-03T15:30:00+03"
   }
   ```
-  ### GET /lessons
+- ### GET /lessons
   Example request `GET /lessons.json`
 
   Example result
@@ -181,7 +181,7 @@ Table of contents
     }
   ]
   ```
-  ### PUT /lessons/:id
+- ### PUT /lessons/:id
   Example request `GET /lessons/6.json`
   ```
   {
@@ -192,9 +192,9 @@ Table of contents
     "datetime": "2016-04-03T17:00:00+03"
   }
   ```
-  ### DELETE /lessons/:id
+- ### DELETE /lessons/:id
   Example request `DELETE /lessons/6.json`
-  ### GET /lessons/:id
+- ### GET /lessons/:id
   Example request `GET /lessons/6.json`
 
   Example result
@@ -208,7 +208,7 @@ Table of contents
   }
   ```
 ### /marks
-  ### POST /marks
+- ### POST /marks
   Example request `POST /marks.json`
   ```
   {
@@ -218,7 +218,7 @@ Table of contents
     "studentId", 5
   }
   ```
-  ### GET /marks
+- ### GET /marks
   Example request `GET /marks.json`
   ```
   [
@@ -236,7 +236,7 @@ Table of contents
     }
   ]
   ```
-  ### GET /marks/:id
+- ### GET /marks/:id
   Example request `GET /marks/55.json`
 
   Example result
@@ -246,7 +246,7 @@ Table of contents
     "lessonId": 22
   }
   ```
-  ### GET /marks/:id/tracks
+- ### GET /marks/:id/tracks
   Example request `GET /marks/55/tracks.json`
 
   Example result
@@ -265,7 +265,7 @@ Table of contents
   ]
   ```
 ### /students
-  ### GET /students
+- ### GET /students
   Example request `GET /students.json`
 
   Example result
@@ -285,7 +285,7 @@ Table of contents
     }
   ]
   ```
-  ### GET /students/:id
+- ### GET /students/:id
   Example request `GET /students/5.json`
 
   Example result
@@ -295,7 +295,7 @@ Table of contents
     "lastName": "Reshetnikov",
     "patronymic": "Alexandrovich"
   }
-  ### GET /students/:id/marks
+- ### GET /students/:id/marks
   Example request `GET /students/5/marks.json`
   ```
   [
@@ -311,7 +311,7 @@ Table of contents
     }
   ]
   ```
-  ### POST /subjects
+- ### POST /subjects
   Example request `POST /subjects.json`
   ```
   {
@@ -320,7 +320,7 @@ Table of contents
   }
   ```
 ### /subjects
-  ### GET /subjects
+- ### GET /subjects
   Example request `GET /subjects.json`
 
   Example result
@@ -338,7 +338,7 @@ Table of contents
     }
   ]
   ```
-  ### PUT /subjects/:id
+- ### PUT /subjects/:id
   Example request `UPDATE /subjects/3.json`
   ```
   {
@@ -346,10 +346,10 @@ Table of contents
     "description": "3D matrix transformations"
   }
   ```
-  ### DELETE /subjects/:id
+- ### DELETE /subjects/:id
   Example request `DELETE /subjects/3.json`
 ### /teachers
-  ### GET /teachers
+- ### GET /teachers
   Example request `GET /teachers.json`
 
   Example result
@@ -367,7 +367,7 @@ Table of contents
     }
   ]
   ```
-  ### GET /teachers/:id/marks
+- ### GET /teachers/:id/marks
   Example request `GET /teachers/10/marks.json`
 
   Example result
@@ -381,7 +381,7 @@ Table of contents
   ]
   ```
 ### /users
-  ### POST /users
+- ### POST /users
   ```
   {
     "id": 3,
@@ -394,7 +394,7 @@ Table of contents
     "phone": "123-456"
   }
   ```
-  ### GET /users
+- ### GET /users
   Example request `GET /users.json`
 
   Example result
@@ -412,7 +412,7 @@ Table of contents
     }
   ]
   ```
-  ### PUT /users/:id
+- ### PUT /users/:id
   Example request `PUT /users/3.json`
   ```
   {
@@ -425,10 +425,10 @@ Table of contents
     "phone": "123-456"
   }
   ```
-  ### DELETE /users/:id
+- ### DELETE /users/:id
   Example request `DELETE /users/3.json`
 
-  ### GET /users/:id
+- ### GET /users/:id
   Example request `GET /users/3.json`
 
   Example result
