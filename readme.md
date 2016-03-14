@@ -4,15 +4,16 @@ Table of contents
   - [/auditories](#auditories)
     - [POST /](#post-auditories)
     - [GET /](#get-auditories)
-    - [/:id](#abc)
+    - [/:auditory_id](#abc)
       - [PUT /](#put-auditoriesid)
       - [DELETE /](#delete-auditoriesid)
   - [/groups](#groups)
     - [POST /](#post-groups)
     - [GET /](#get-groups)
-    - [PUT /:id](#put-groupsid)
-    - [DELETE //:id](#delete-groupsid)
-    - [GET /:id/students](#get-groupsidstudents)
+    - /:group_id
+      - PUT /
+      - DELETE /
+      - GET /students
   - [/lessons](#lessons)
     - [POST /](#post-lessons)
     - [GET /](#get-lessons)
@@ -61,6 +62,8 @@ Example request `POST /auditories.json`
   "description": "Phisics laboratory"
 }
 ```
+#### POST
+#### GET
 ### GET /auditories
 Example request `GET /auditories.json`
 
@@ -90,6 +93,8 @@ Example request `UPDATE /auditories/5.json`
 ### DELETE /auditories/:id
 Example request `DELETE /auditories/7.json`
 ### POST /groups
+#### POST
+#### GET
 Example request `POST /groups.json`
 ```
 {
