@@ -68,7 +68,7 @@ describe Admin::TablesController do
     end
 
     context "one lesson" do
-      before :all do
+      before do
         @lesson = FactoryGirl.create :lesson
       end
 

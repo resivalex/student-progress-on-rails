@@ -16,9 +16,10 @@ class Lesson < ActiveRecord::Base
 		{
 			id: id,
 			groupId: group_id,
-			subjecId: subject_id,
+			subjectId: subject_id,
 			auditoryId: auditory_id,
-			teacherId: user_id
+			teacherId: user_id,
+			datetime: time.iso8601
 		}
 	end
 
@@ -27,6 +28,8 @@ class Lesson < ActiveRecord::Base
 		send :subject_id=, data[:subjectId]
 		send :auditory_id=, data[:auditoryId]
 		send :user_id=, data[:teacherId]
+		send :time=, data[:datetime]
+		self
 	end
 
 	def api_time

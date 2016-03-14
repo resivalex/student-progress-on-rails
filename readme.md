@@ -14,6 +14,7 @@ Table of contents
   - [GET /lessons](#get-lessons)
   - [PUT /lessons/:id](#put-lessonsid)
   - [DELETE /lessons/:id](#delete-lessonsid)
+  - [GET /lessons/:id](#get-lessonsid)
   - [POST /marks](#post-marks)
   - [GET /marks](#get-marks)
   - [GET /marks/:id](#get-marks-id)
@@ -168,6 +169,19 @@ Example request `GET /lessons/6.json`
 ```
 ### DELETE /lessons/:id
 Example request `DELETE /lessons/6.json`
+### GET /lessons/:id
+Example request `GET /lessons/6.json`
+
+Example result
+```
+{
+  "groupId": 2,
+  "teacherId": 10,
+  "subjectId": 3,
+  "auditoryId": 7,
+  "datetime": "2016-04-03T17:00:00+03"
+}
+```
 ### POST /marks
 Example request `POST /marks.json`
 ```
