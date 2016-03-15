@@ -406,14 +406,10 @@ Table of contents
   ```
   [
     {
-      "id": 55,
-      "mark": "4",
-      "lessonId": 22
-    },
-    {
-      "id": 56,
-      "mark": "н",
-      "lessonId": 27
+      "id": 10,
+      "firstName": "Valentin",
+      "lastName": "Gubarev",
+      "patronymic": "Yurjevich"
     }
   ]
   ```
@@ -429,10 +425,19 @@ Table of contents
         {
           "id": 55,
           "mark": "4",
-          "lessonId": 22
+          "comment": "Well",
+          "lessonId": 22,
+          "studentId": 5
+        },
+        {
+          "id": 56,
+          "mark": "н",
+          "comment": "Absent"
+          "lessonId": 27,
+          "studentId": 3
         }
       ]
-      ```
+    ```
 
 ### /users
 - #### POST

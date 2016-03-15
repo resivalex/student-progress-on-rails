@@ -4,6 +4,8 @@ class Lesson < ActiveRecord::Base
 	belongs_to :auditory, inverse_of: :lessons
 	belongs_to :teacher, class_name: 'User', foreign_key: 'user_id'
 
+	has_many :marks
+
 	validates :group, presence: true
 	validates :subject, presence: true
 	validates :auditory, presence: true

@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   ROLES = %w(admin chief student teacher)
 
+  has_many :lessons
+
   validates :first_name, :last_name, :patronymic, :login, :password, :role, :email, :phone,
             presence: true
   validates :first_name, :last_name, :patronymic, length: { maximum: 25 }
@@ -13,6 +15,7 @@ class User < ActiveRecord::Base
             format: { with: /(\d.*){5,}/, message: 'contains less than 5 digits'}
 
   scope :students, -> { where(role: 'student') }
+  scope :teachers, -> { where(role: 'teacher') }
 
   def admin?
     role == 'admin'

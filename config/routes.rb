@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       get 'tracks'
     end
   end
+  resources :teachers, only: [:index] do
+    resources :marks, only: [:index]
+  end
 
   namespace :admin do
     resources :tables, only: [:index, :show]

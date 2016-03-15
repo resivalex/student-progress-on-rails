@@ -8,8 +8,18 @@ class MarksController < ApplicationController
   end
 
   def index
-    @marks = Mark.all.map do |m|
-      OpenStruct.new m.to_api
+    teacher_id = params[:teacher_id]
+    if teacher_id
+      if User.exists? teacher_id
+        teacher = User.find teacher_id
+        @marks = teacher.lessons.map(&:marks).flatten
+      else
+        render plain: 'Not found', status: :not_found
+      end
+    else
+      @marks = Mark.all.map do |m|
+        OpenStruct.new m.to_api
+      end
     end
   end
 
