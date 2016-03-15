@@ -233,7 +233,7 @@ Table of contents
     "mark": "4",
     "comment": "Well",
     "lessonId": 22,
-    "studentId", 5
+    "studentId": 5
   }
   ```
 
@@ -245,13 +245,15 @@ Table of contents
       "id": 55,
       "mark": "4",
       "comment": "Well",
-      "lessonId": 22
+      "lessonId": 22,
+      "studentId": 5
     },
     {
       "id": 56,
       "mark": "н",
       "comment": "Absent"
-      "lessonId": 27
+      "lessonId": 27,
+      "studentId": 3
     }
   ]
   ```
@@ -264,7 +266,9 @@ Table of contents
     ```
     {
       "mark": "4",
-      "lessonId": 22
+      "comment": "Well",
+      "lessonId": 22,
+      "studentId": 5
     }
     ```
 
@@ -277,7 +281,7 @@ Table of contents
       [
         {
           "mark": "2",
-          "comment": "No book"
+          "comment": "No book",
           "datetime": "2016-04-03T17:06:34+03"
         },
         {

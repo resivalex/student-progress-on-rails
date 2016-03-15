@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   resources :subjects
   resources :students, only: [:index, :show]
   resources :lessons
-  resources :marks
+  resources :marks do
+    member do
+      get 'tracks'
+    end
+  end
 
   namespace :admin do
     resources :tables, only: [:index, :show]
