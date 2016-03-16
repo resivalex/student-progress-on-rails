@@ -24,6 +24,8 @@ module StudentProgressOnRails
     config.active_record.raise_in_transactional_callbacks = true
 
     config.web_console.development_only = false
-    
+
+    # Set Slim output
+    Slim::Engine.set_options :pretty => true, :sort_attrs => false, :indent => '  '
   end
 end

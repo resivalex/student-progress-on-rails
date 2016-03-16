@@ -1,6 +1,11 @@
 class WelcomeController < ApplicationController
-	layout false
-	
-	def index
+  def index
+
 	end
+
+  def timetable
+  end
+
+  def tables
+  end
 end

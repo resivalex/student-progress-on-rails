@@ -437,7 +437,7 @@ Table of contents
           "studentId": 3
         }
       ]
-    ```
+      ```
 
 ### /users
 - #### POST

@@ -1,0 +1,12 @@
+- content_for :title, 'Tables'
+
+h1 Auditories
+
+div ng-app="tablesApp"
+  div ng-controller="AuditoryCtrl"
+    input type="text" ng-model="name"
+    input type="text" ng-model="description"
+    button ng-click="saveAuditory()" Add
+    ul
+      li ng-repeat="auditory in auditories"
+        | {{id}}, {{name}}, {{description}}

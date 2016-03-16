@@ -30,6 +30,7 @@ gem 'slim'
 source 'http://rails-assets.org' do
   # AngularJS
   gem 'rails-assets-angular'
+  gem 'rails-assets-angular-resource'
 end
 
 # JSON
