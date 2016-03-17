@@ -1,0 +1,18 @@
+<div>
+  <h2>{{header}} resource</h2>
+  <input ng-repeat="field in fields" type="text" ng-model="adding[field]"/>
+  <button ng-click="saveResource()">Add</button>
+  <ul>
+    <li ng-repeat="resource in resources" ng-init="row = $index">
+      <input ng-repeat="field in getFields" ng-readonly="!inEditMode(row)" ng-model="resource[field]"/>
+      <button ng-hide="inEditMode(row)" ng-click="turnOnEditMode(row)">Edit</button>
+      <button ng-show="inEditMode(row)" ng-click="updateResource(row)">Update</button>
+      <button ng-show="inEditMode(row)" ng-click="turnOffEditMode(row)">Cancel</button>
+      <button ng-hide="inEditMode(row)" ng-click="deleteResource(row)">Delete</button>
+    </li>
+  </ul>
+  <div>{{errorCode}}</div>
+  <ul>
+    <li ng-repeat="(name, error) in errors">{{name}}: {{error}}</li>
+  </ul>
+</div>

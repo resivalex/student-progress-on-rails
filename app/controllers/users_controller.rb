@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if @user.save
       render plain: 'OK'
     else
-      render json: @user.errors
+      render json: @user.errors, status: :bad_request
     end
   end
 
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       if @user.save
         render plain: 'OK'
       else
-        render json: @user.errors
+        render json: @user.errors, status: :bad_request
       end
     else
       render plain: 'Not found', status: :not_found

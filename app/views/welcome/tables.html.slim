@@ -1,12 +1,10 @@
 - content_for :title, 'Tables'
 
-h1 Auditories
+h1 Tables
 
 div ng-app="tablesApp"
-  div ng-controller="AuditoryCtrl"
-    input type="text" ng-model="name"
-    input type="text" ng-model="description"
-    button ng-click="saveAuditory()" Add
-    ul
-      li ng-repeat="auditory in auditories"
-        | {{id}}, {{name}}, {{description}}
+  sp-resource-table sp-resource="Auditories" sp-fields="['name', 'description']"
+  sp-resource-table sp-resource="Groups" sp-fields="['name', 'description']"
+  sp-resource-table sp-resource="Subjects" sp-fields="['name', 'description']"
+  sp-resource-table sp-resource="Users" sp-fields="['firstName', 'lastName', 'patronymic', 'login', 'role', 'email', 'password', 'phone']"
+  sp-resource-table sp-resource="Teachers" sp-fields="['firstName', 'lastName', 'patronymic']"
