@@ -10,12 +10,15 @@ class Lesson < ActiveRecord::Base
 	validates :subject, presence: true
 	validates :auditory, presence: true
 	validates :teacher, presence: true
+	validates :time, presence: true
 
 	validate :time_multiple_by_five_munutes?
 
 	def time_multiple_by_five_munutes?
-		unless time.sec == 0 and time.min % 5 == 0
-			errors.add(:time, "isn't multiple 5 minutes")
+		unless time.nil?
+			unless time.sec == 0 and time.min % 5 == 0
+				errors.add(:time, "isn't multiple 5 minutes")
+			end
 		end
 	end
 

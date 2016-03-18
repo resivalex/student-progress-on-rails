@@ -1,8 +1,9 @@
 class StudentsController < ApplicationController
   def index
-    if params[:group_id]
-      if Group.exists? params[:group_id]
-        @students = User.students_by_group params[:group_id]
+    group_id = params[:group_id]
+    if group_id
+      if Group.exists? group_id
+        @students = User.students_by_group group_id
       else
         render plain: 'Not found', status: :not_found
       end
@@ -12,10 +13,8 @@ class StudentsController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    if User.students.exists? id
-      @student = User.students.find id
-    else
+    @student = User.student_by_id params[:id]
+    unless @student
       render plain: 'Not found', status: :not_found
     end
   end

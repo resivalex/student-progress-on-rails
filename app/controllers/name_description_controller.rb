@@ -5,9 +5,8 @@ module NameDescriptionController
   end
 
   def show
-    id = params[:id]
-    if model.exists? id
-      @object = model.find id
+    @object = model.find_by_id params[:id]
+    if @object
       render 'name_description/show'
     else
       render plain: 'Not found'
@@ -25,25 +24,24 @@ module NameDescriptionController
   end
 
   def update
-    id = params[:id]
-    if model.exists? id
-      object = model.find id
+    object = model.find_by_id params[:id]
+    if object
       object.from_api params
 
       if object.save
         render plain: 'OK'
       else
-        render json: object.errors
+        render json: object.errors, status: :bad_request
       end
     else
-      render plain: 'Not found'
+      render plain: 'Not found', status: :not_found
     end
   end
 
   def destroy
-    id = params[:id]
-    if model.exists? id
-      model.find(id).destroy
+    object = model.find_by_id params[:id]
+    if object
+      object.destroy
       render plain: 'OK'
     else
       render plain: 'Not found', status: :not_found

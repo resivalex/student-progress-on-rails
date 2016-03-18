@@ -7,4 +7,24 @@ div ng-app="tablesApp"
   sp-resource-table sp-resource="Groups" sp-fields="['name', 'description']"
   sp-resource-table sp-resource="Subjects" sp-fields="['name', 'description']"
   sp-resource-table sp-resource="Users" sp-fields="['firstName', 'lastName', 'patronymic', 'login', 'role', 'email', 'password', 'phone']"
-  sp-resource-table sp-resource="Teachers" sp-fields="['firstName', 'lastName', 'patronymic']"
+  sp-resource-table sp-resource="Students" sp-fields="['groupId', 'firstName', 'lastName', 'patronymic']"
+  sp-resource-table sp-resource="Lessons" sp-fields="['groupId', 'teacherId', 'subjectId', 'auditoryId', 'datetime']"
+
+  div ng-controller="LessonsCtrl"
+    select ng-model="groupId"
+      option ng-repeat="a in groups" ng-value="a.id"
+        | {{a.id}} {{a.name}}
+    select ng-model="teacherId"
+      option ng-repeat="a in teachers" ng-value="a.id"
+        | {{a.id}} {{a.firstName}} {{a.lastName}} {{a.patronymic}}
+    select ng-model="subjectId"
+      option ng-repeat="a in subjects" ng-value="a.id"
+        | {{a.id}} {{a.name}}
+    select ng-model="auditoryId"
+      option ng-repeat="a in auditories" ng-value="a.id"
+        | {{a.id}} {{a.name}}
+    input ng-model="time"
+    button ng-click="addLesson()" Add lesson
+
+    p ng-repeat="lesson in lessons"
+      | {{lesson.id}} {{lesson.group}} {{lesson.teacher}} {{lesson.subject}} {{lesson.auditory}} {{lesson.datetime}}

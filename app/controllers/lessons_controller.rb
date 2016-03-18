@@ -4,10 +4,8 @@ class LessonsController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    if Lesson.exists? id
-      @lesson = Lesson.find id
-    else
+    @lesson = Lesson.find_by_id params[:id]
+    unless @lesson
       render plain: 'Not found', status: :not_found
     end
   end
@@ -17,19 +15,18 @@ class LessonsController < ApplicationController
     if lesson.save
       render plain: 'OK'
     else
-      render plain: 'Bad request', status: :bad_request
+      render json: lesson.errors, status: :bad_request
     end
   end
 
   def update
-    id = params[:id]
-    if Lesson.exists? id
-      lesson = Lesson.find id
+    lesson = Lesson.find_by_id params[:id]
+    if lesson
       lesson.from_api params
       if lesson.save
         render plain: 'OK'
       else
-        render plain: 'Bad request', status: :bad_request
+        render json: lesson.errors, status: :bad_request
       end
     else
       render plain: 'Not found', status: :not_found
@@ -37,12 +34,12 @@ class LessonsController < ApplicationController
   end
 
   def destroy
-    id = params[:id]
-    if Lesson.exists? id
-      Lesson.find(id).destroy
+    lesson = Lesson.find_by_id params[:id]
+    if lesson
+      lesson.destroy
       render plain: 'OK'
     else
-      render plain: 'Not found'
+      render plain: 'Not found', status: :not_found
     end
   end
 end

@@ -3,27 +3,36 @@ require 'rails_helper.rb'
 describe 'Subjects API' do
   include_context '2 students, admin and teacher'
 
-  it '#index' do
-    get '/students.json'
-    expect(json.length).to eq 2
-    ids = [json[0]['id'], json[1]['id']]
+  describe 'GET /students' do
+    before { get '/students.json' }
 
-    expect(ids).to include students[0].id
-    expect(ids).to include students[1].id
+    it { expect(json.length).to eq 2 }
+
+    it 'contains full set' do
+      expect(json.map{|i|i['id']}).to match_array students.map(&:id)
+    end
   end
 
-  describe '#show' do
-    it 'existing student' do
-      get "/students/#{students[0].id}"
+  describe 'GET /students/:id' do
+    describe 'existing student' do
+      let(:student_user) { students[0] }
+      let!(:student) { FactoryGirl.create :student, user: student_user }
 
-      expect(response).to be_success
-      expect(json['firstName']).to eq students[0].first_name
+      before { get "/students/#{student_user.id}" }
+
+      it { expect(response).to be_success }
+
+      subject { json }
+      # its(['groupId']) { should eq student.group_id }
+      its(['firstName']) { should eq student_user.first_name }
+      its(['lastName']) { should eq student_user.last_name }
+      its(['patronymic']) { should eq student_user.patronymic }
     end
 
-    it 'not student' do
-      get "/students/#{admin.id}"
+    describe 'not student' do
+      before { get "/students/#{admin.id}" }
 
-      expect(response).to be_not_found
+      it { expect(response).to be_not_found }
     end
   end
 end

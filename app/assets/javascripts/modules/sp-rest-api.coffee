@@ -20,3 +20,10 @@ angular.module 'spRestApi', ['ngResource']
   $resource '/teachers/:id.json', null,
     update: { method: 'PUT' }
 ]
+.factory 'Lessons', ['$resource', ($resource) ->
+  $resource '/lessons/:id.json', null,
+    update: { method: 'PUT' }
+]
+.factory 'Students', ['$resource', ($resource) ->
+  $resource '/students/:id.json'
+]

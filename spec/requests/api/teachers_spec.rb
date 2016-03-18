@@ -1,6 +1,13 @@
 require 'rails_helper.rb'
 
 describe 'Teachers API' do
+  shared_examples 'teacher record' do
+    its(['id']) { should eq teacher.id }
+    its(['firstName']) { should eq teacher.first_name }
+    its(['lastName']) { should eq teacher.last_name }
+    its(['patronymic']) { should eq teacher.patronymic }
+  end
+
   describe 'GET /teachers' do
     subject { json }
 
@@ -18,10 +25,7 @@ describe 'Teachers API' do
       it { expect(json.length).to eq 1 }
 
       subject { json[0] }
-      its(['id']) { should eq teacher.id }
-      its(['firstName']) { should eq teacher.first_name }
-      its(['lastName']) { should eq teacher.last_name }
-      its(['patronymic']) { should eq teacher.patronymic }
+      it_behaves_like 'teacher record'
     end
 
     context '2 teachers' do
@@ -33,6 +37,17 @@ describe 'Teachers API' do
       its(:length) { should eq 2 }
       it { expect(subject[0]['id']).to eq teachers[0].id }
       it { expect(subject.map {|a| a['id']}).to match_array teachers.map(&:id) }
+    end
+  end
+
+  describe 'GET /teachers/:id' do
+    context 'one teacher' do
+      let!(:teacher) { FactoryGirl.create :teacher }
+
+      before { get "/teachers/#{teacher.id}.json" }
+
+      subject { json }
+      it_behaves_like 'teacher record'
     end
   end
 

@@ -27,38 +27,34 @@ angular.module 'spDirectives'
     refreshList = ->
       scope.resources = Resource.query()
 
-    refreshList()
+    clearErrors = ->
+      scope.errorCode = null
+      scope.errors = null
+
+    showErrors = (response) ->
+      scope.errorCode = "#{response.status}: #{response.statusText}"
+      scope.errors = response.data
 
     scope.saveResource = ->
       resource[i] = scope.adding[i] for i in scope.fields
 
       Resource.save resource, refreshList
       .$promise
-      .then ->
-        scope.errorCode = null
-        scope.errors = null
-      .catch (response) ->
-        scope.errorCode = "#{response.status}: #{response.statusText}"
-        scope.errors = response.data
+      .then clearErrors
+      .catch showErrors
 
     scope.updateResource = (index) ->
       a = scope.resources[index]
       Resource.update id: a.id, a, refreshList
       .$promise
-      .then ->
-        scope.errorCode = null
-        scope.errors = null
-      .catch (response) ->
-        scope.errorCode = "#{response.status}: #{response.statusText}"
-        scope.errors = response.data
+      .then clearErrors
+      .catch showErrors
 
     scope.deleteResource = (index) ->
       Resource.delete id: scope.resources[index].id, refreshList
       .$promise
-      .then ->
-        scope.errorCode = null
-        scope.errors = null
-      .catch (response) ->
-        scope.errorCode = "#{response.status}: #{response.statusText}"
-        scope.errors = response.data
+      .then clearErrors
+      .catch showErrors
+
+    refreshList()
 ]

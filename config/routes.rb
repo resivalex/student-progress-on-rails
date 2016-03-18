@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       get 'tracks'
     end
   end
-  resources :teachers, only: [:index] do
+  resources :teachers, only: [:index, :show] do
     resources :marks, only: [:index]
   end
 

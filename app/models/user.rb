@@ -55,6 +55,14 @@ class User < ActiveRecord::Base
     Student.by_group(group_id).joins('JOIN users ON students.user_id = users.id')
   end
 
+  def self.teacher_by_id id
+    teachers.find_by_id id
+  end
+
+  def self.student_by_id id
+    students.find_by_id id
+  end
+
 private
 
   def only_full_name
