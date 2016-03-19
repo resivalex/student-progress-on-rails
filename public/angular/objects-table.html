@@ -1,0 +1,8 @@
+<table class="table">
+  <tr ng-show="objects && objects.length">
+    <th ng-repeat="(name, val) in objects[0]">{{name}}</th>
+  </tr>
+  <tr ng-repeat="object in objects">
+    <td ng-repeat="(name, val) in object">{{val}}</td>
+  </tr>
+</table>

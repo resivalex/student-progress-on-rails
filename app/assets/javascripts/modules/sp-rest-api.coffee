@@ -9,8 +9,13 @@ angular.module 'spRestApi', ['ngResource']
     update: { method: 'PUT' }
 ]
 .factory 'Groups', ['$resource', ($resource) ->
-  $resource '/groups/:id.json', null,
+  $resource '/groups/:id/:action.json', null,
     update: { method: 'PUT' }
+    getStudents:
+      method: 'GET'
+      params:
+        action: 'students'
+      isArray: true
 ]
 .factory 'Users', ['$resource', ($resource) ->
   $resource '/users/:id.json', null,
@@ -26,4 +31,7 @@ angular.module 'spRestApi', ['ngResource']
 ]
 .factory 'Students', ['$resource', ($resource) ->
   $resource '/students/:id.json'
+]
+.factory 'Marks', ['$resource', ($resource) ->
+  $resource '/marks/:id.json'
 ]

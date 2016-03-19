@@ -3,12 +3,12 @@
 h1 Tables
 
 div ng-app="tablesApp"
-  sp-resource-table sp-resource="Auditories" sp-fields="['name', 'description']"
-  sp-resource-table sp-resource="Groups" sp-fields="['name', 'description']"
-  sp-resource-table sp-resource="Subjects" sp-fields="['name', 'description']"
-  sp-resource-table sp-resource="Users" sp-fields="['firstName', 'lastName', 'patronymic', 'login', 'role', 'email', 'password', 'phone']"
-  sp-resource-table sp-resource="Students" sp-fields="['groupId', 'firstName', 'lastName', 'patronymic']"
-  sp-resource-table sp-resource="Lessons" sp-fields="['groupId', 'teacherId', 'subjectId', 'auditoryId', 'datetime']"
+  sp-resource-table sp-resource="Auditories" sp-fields="['id', 'name', 'description']"
+  sp-resource-table sp-resource="Groups" sp-fields="['id', 'name', 'description']"
+  sp-resource-table sp-resource="Subjects" sp-fields="['id', 'name', 'description']"
+  sp-resource-table sp-resource="Users" sp-fields="['id', 'firstName', 'lastName', 'patronymic', 'login', 'role', 'email', 'password', 'phone']"
+  sp-resource-table sp-resource="Students" sp-fields="['id', 'userId', 'groupId', 'firstName', 'lastName', 'patronymic']"
+  sp-resource-table sp-resource="Lessons" sp-fields="['id', 'groupId', 'teacherId', 'subjectId', 'auditoryId', 'datetime']"
 
   div ng-controller="LessonsCtrl"
     select ng-model="groupId"

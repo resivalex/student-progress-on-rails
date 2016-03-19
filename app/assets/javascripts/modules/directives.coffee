@@ -3,10 +3,10 @@ angular.module 'spDirectives', []
 angular.module 'spDirectives'
 .directive 'spResourceTable', ['$injector', ($injector) ->
   restrict: 'E'
-  scope: {
+  scope:
     spF: '&spFields'
     spGetF: '&spGetFields'
-  }
+
   templateUrl: '/angular/resource-table.html'
   link: (scope, element, attrs) ->
     Resource = $injector.get attrs.spResource
@@ -58,3 +58,19 @@ angular.module 'spDirectives'
 
     refreshList()
 ]
+
+.directive 'spObjectsTable', ->
+  restrict: 'E'
+  scope:
+    objects: '=spObjects'
+  templateUrl: '/angular/objects-table.html'
+
+.directive 'spSelectList', ->
+  restrict: 'E'
+  scope:
+    items: '=spItems'
+    id: '=spId'
+  templateUrl: '/angular/select-list.html'
+  link: (scope) ->
+    scope.idChanged = (clickedId) ->
+      scope.id = clickedId

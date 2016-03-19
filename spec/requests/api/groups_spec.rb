@@ -10,24 +10,28 @@ describe 'Groups API' do
   describe '/groups/:id/students' do
     include_context '3 students in 2 groups'
 
-    it 'wrong group id' do
-      get '/groups/wrong_id/students.json'
+    describe 'wrong group id' do
+      before { get '/groups/wrong_id/students.json' }
 
-      expect(response).to be_not_found
+      it { expect(response).to be_not_found }
     end
 
-    it 'group with one student' do
-      get "/groups/#{groups[0].id}/students.json"
+    context 'group with one student' do
+      before { get "/groups/#{groups[0].id}/students.json" }
 
-      expect(response).to be_success
-      expect(json.length).to eq 1
+      it { expect(response).to be_success }
+      it { expect(json.length).to eq 1 }
+
+      subject { json[0] }
+      its(['id']) { should be_present }
+      its(['firstName']) { should be_present }
     end
 
-    it 'group with two students' do
-      get "/groups/#{groups[1].id}/students.json"
+    context 'group with two students' do
+      before { get "/groups/#{groups[1].id}/students.json" }
 
-      expect(response).to be_success
-      expect(json.length).to eq 2
+      it { expect(response).to be_success }
+      it { expect(json.length).to eq 2 }
     end
   end
 end

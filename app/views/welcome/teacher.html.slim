@@ -1,0 +1,20 @@
+div ng-app="teacherApp"
+  div ng-controller="LessonsCtrl"
+    sp-objects-table sp-objects="lessons"
+
+  div ng-controller="JournalCtrl"
+    sp-select-list sp-items="lessonsList" sp-id="currentLessonId"
+    p
+      | {{currentLessonId}}
+
+    sp-select-list sp-items="studentsList" sp-id="currentStudentId"
+    p
+      | {{currentStudentId}}
+
+    input ng-show="currentStudentId" ng-model="markName"
+    button class="btn" ng-show="currentStudentId" ng-click="addMark()" Add mark
+
+    sp-select-list sp-items="marksList" sp-id="currentMarkId"
+
+    p
+      | {{marks | json}}

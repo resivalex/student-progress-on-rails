@@ -31,6 +31,7 @@ Table of contents
       - [/tracks](#tracks)
         - [GET](#get)
   - [/students](#students)
+    - [POST](#post)
     - [GET](#get)
     - [/:student_id](#student_id)
       - [GET](#get)
@@ -293,6 +294,15 @@ Table of contents
       ```
 
 ### /students
+- #### POST
+  Example request `POST /students.json`
+  ```
+  {
+    studentId: 5,
+    groupId: 2
+  }
+  ```
+
 - #### GET
   Example request `GET /students.json`
 
@@ -301,12 +311,14 @@ Table of contents
   [
     {
       "id": 5,
+      "groupId": "2",
       "firstName": "Ivan",
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich"
     },
     {
       "id": 9,
+      "groupId": null,
       "firstName": "Sergey",
       "lastName": "Sergeev",
       "patronymic": "Sergeevich"

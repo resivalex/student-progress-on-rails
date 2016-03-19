@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def self.students_by_group group_id
-    Student.by_group(group_id).joins('JOIN users ON students.user_id = users.id')
+    User.joins('JOIN students ON users.id = students.user_id').where('students.group_id = ?', group_id)
   end
 
   def self.teacher_by_id id

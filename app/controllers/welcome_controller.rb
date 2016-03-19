@@ -8,4 +8,7 @@ class WelcomeController < ApplicationController
 
   def tables
   end
+
+  def teacher
+  end
 end

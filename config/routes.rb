@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/login' => 'login#index'
   get '/timetable' => 'welcome#timetable'
   get '/tables' => 'welcome#tables'
+  get '/teacher' => 'welcome#teacher'
 
   resources :users
   resources :auditories
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
     resources :students
   end
   resources :subjects
-  resources :students, only: [:index, :show]
+  resources :students, only: [:index, :show, :create]
   resources :lessons
   resources :marks do
     member do
