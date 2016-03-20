@@ -9,14 +9,6 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
   $scope.time = (new Date()).toISOString()
 
   $scope.lessons = Lessons.query ->
-    for lesson, index in $scope.lessons
-      $scope.lessons[index].group = Groups.get id: $scope.lessons[index].groupId
-    for lesson, index in $scope.lessons
-      $scope.lessons[index].teacher = Teachers.get id: $scope.lessons[index].teacherId
-    for lesson, index in $scope.lessons
-      $scope.lessons[index].subject = Subjects.get id: $scope.lessons[index].subjectId
-    for lesson, index in $scope.lessons
-      $scope.lessons[index].auditory = Auditories.get id: $scope.lessons[index].auditoryId
 
   $scope.addLesson = ->
     lesson = {}
@@ -26,5 +18,5 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
     lesson.auditoryId = $scope.auditoryId
     lesson.datetime = $scope.time
     Lessons.save lesson, ->
-      lessons = Lessons.query()
+      $scope.lessons = Lessons.query()
 ]

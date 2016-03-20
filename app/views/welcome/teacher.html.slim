@@ -1,6 +1,6 @@
 div ng-app="teacherApp"
   div ng-controller="LessonsCtrl"
-    sp-objects-table sp-objects="lessons"
+    sp-objects-table sp-objects="lessons" sp-fields="['group', 'subject', 'auditory', 'teacher', 'datetime']"
 
   div ng-controller="JournalCtrl"
     sp-select-list sp-items="lessonsList" sp-id="currentLessonId"
@@ -11,10 +11,9 @@ div ng-app="teacherApp"
     p
       | {{currentStudentId}}
 
-    input ng-show="currentStudentId" ng-model="markName"
-    button class="btn" ng-show="currentStudentId" ng-click="addMark()" Add mark
+    div ng-show="currentStudentId"
+      input ng-model="markName" placeholder="mark"
+      input ng-model="markComment" placeholder="comment"
+      button class="btn" ng-click="addMark()" Add mark
 
-    sp-select-list sp-items="marksList" sp-id="currentMarkId"
-
-    p
-      | {{marks | json}}
+      sp-objects-table sp-objects="markTracks" sp-fields="['mark', 'comment', 'datetime']"

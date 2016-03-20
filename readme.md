@@ -23,6 +23,8 @@ Table of contents
       - [PUT](#put)
       - [GET](#get)
       - [DELETE](#delete)
+      - [/students](#students)
+        - [GET](#get)
   - [/marks](#marks)
     - [POST](#post-marks)
     - [GET](#get-marks)
@@ -225,6 +227,34 @@ Table of contents
 
   - #### DELETE
     Example request `DELETE /lessons/6.json`
+
+  - #### /students
+    - #### GET
+      Example request `GET /lessons/6/students.json`
+
+      Example response
+      ```
+      [
+        {
+          "studentId": 5,
+          "markId": 55,
+          "mark": "4",
+          "comment": "Well",
+          "firstName": "Ivan",
+          "lastName": "Reshetnikov",
+          "patronymic": "Alexandrovich"
+        },
+        {
+          "studentId": 6,
+          "markId": null,
+          "mark": null,
+          "comment": null,
+          "firstName": "Sergey",
+          "lastName": "Sergeev",
+          "patronymic": "Sergeevich"
+        }
+      ]
+      ```
 
 ### /marks
 - #### POST

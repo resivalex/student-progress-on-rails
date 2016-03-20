@@ -3,6 +3,8 @@ class Mark < ActiveRecord::Base
   belongs_to :student
 	has_many :mark_tracks, -> { order 'created_at asc' }
 
+  scope :by_mark_id, -> (mark_id) { where(mark_id: mark_id).order(:created_at) }
+
   def to_api
     mark = MarkTrack.last_by_mark_id id
     {
@@ -30,12 +32,13 @@ class Mark < ActiveRecord::Base
         m.lesson_id = lesson_id
         m.student_id = student_id
       end
-      MarkTrack.create do |t|
+      track = MarkTrack.new do |t|
         t.name = data[:mark]
         t.comment = data[:comment]
-        t.mark_id = mark.id
+        t.mark = mark
       end
-      true
+
+      track.save
     else
       false
     end

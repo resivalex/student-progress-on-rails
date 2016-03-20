@@ -13,18 +13,27 @@ Rails.application.routes.draw do
   get '/teacher' => 'welcome#teacher'
 
   resources :users
+
   resources :auditories
+
   resources :groups do
     resources :students
   end
+
   resources :subjects
+
   resources :students, only: [:index, :show, :create]
-  resources :lessons
+
+  resources :lessons do
+    resources :students, only: [:index]
+  end
+
   resources :marks do
     member do
-      get 'tracks'
+      get :tracks
     end
   end
+
   resources :teachers, only: [:index, :show] do
     resources :marks, only: [:index]
   end

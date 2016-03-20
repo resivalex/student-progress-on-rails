@@ -45,4 +45,24 @@ class Lesson < ActiveRecord::Base
 	def api_time
 		time.iso8601
 	end
+
+	def rich_struct
+		h = {
+			id: id,
+			group_id: group_id,
+			group: group.name,
+			subject_id: subject_id,
+			subject: subject.name,
+			auditory_id: auditory_id,
+			auditory: auditory.name,
+			teacher_id: user_id,
+			teacher: teacher.last_name,
+			time: api_time
+		}
+		OpenStruct.new h
+	end
+
+	def self.to_api
+		Lesson.all.map(&:rich_struct)
+	end
 end

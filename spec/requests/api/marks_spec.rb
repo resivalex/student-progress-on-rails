@@ -25,10 +25,14 @@ describe 'Marks API' do
 
       it 'creates mark' do
         expect(Mark.count).to eq 1
+        expect(Mark.take.lesson_id).to eq mark_data[:lessonId]
+        expect(Mark.take.student_id).to eq mark_data[:studentId]
       end
 
       it 'adds track' do
         expect(MarkTrack.count).to eq 1
+        expect(MarkTrack.take.name).to eq mark_data[:mark]
+        expect(MarkTrack.take.comment).to eq mark_data[:comment]
       end
 
       it 'links track' do

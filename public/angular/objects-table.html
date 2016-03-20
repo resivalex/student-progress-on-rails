@@ -1,8 +1,8 @@
 <table class="table">
   <tr ng-show="objects && objects.length">
-    <th ng-repeat="(name, val) in objects[0]">{{name}}</th>
+    <th ng-repeat="field in fields">{{field}}</th>
   </tr>
   <tr ng-repeat="object in objects">
-    <td ng-repeat="(name, val) in object">{{val}}</td>
+    <td ng-repeat="field in fields">{{object[field]}}</td>
   </tr>
 </table>

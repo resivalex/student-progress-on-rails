@@ -23,9 +23,13 @@ describe 'Lessons API' do
   shared_examples 'lesson record' do
     its(['id']) { should eq lesson.id }
     its(['groupId']) { should eq lesson.group_id }
+    its(['group']) { should eq lesson.group.name }
     its(['teacherId']) { should eq lesson.user_id }
+    its(['teacher']) { should eq lesson.teacher.last_name }
     its(['subjectId']) { should eq lesson.subject_id }
+    its(['subject']) { should eq lesson.subject.name }
     its(['auditoryId']) { should eq lesson.auditory_id }
+    its(['auditory']) { should eq lesson.auditory.name }
     its(['datetime']) { should eq lesson.time.iso8601 }
   end
 
@@ -101,5 +105,41 @@ describe 'Lessons API' do
     before { delete "/lessons/#{lesson.id}.json" }
 
     it { expect(Lesson.count).to eq 0 }
+  end
+
+  describe 'GET /lessons/:id/students' do
+          # "studentId": 5,
+          # "markId": 55,
+          # "mark": "4",
+          # "comment": "Well",
+          # "firstName": "Ivan",
+          # "lastName": "Reshetnikov",
+          # "patronymic": "Alexandrovich"
+      context 'student with mark and without' do
+        let!(:group) { FactoryGirl.create :group }
+        let!(:student_with_mark) { FactoryGirl.create :student, group: group }
+        let!(:student_without_mark) { FactoryGirl.create :student, group: group }
+        let!(:another_student) { FactoryGirl.create :student }
+        let!(:lesson) { FactoryGirl.create :lesson, group: group }
+        let!(:mark) { FactoryGirl.create :mark, student: student_with_mark, lesson: lesson }
+        let!(:mark_track) { FactoryGirl.create :mark_track, mark: mark }
+
+        before { get "/lessons/#{lesson.id}/students.json" }
+
+        it { expect(json.length).to be 2 }
+        it { expect(json.map{|i| i['markId']}).to match_array [mark.id, nil] }
+
+        context 'with mark' do
+          subject { json.find{|i| i['markId'].present?} }
+
+          its(['id']) { should eq student_with_mark.id }
+          its(['markId']) { should eq mark.id }
+          its(['mark']) { should eq mark_track.name }
+          its(['comment']) { should eq mark_track.comment }
+          its(['firstName']) { should eq student_with_mark.user.first_name }
+          its(['lastName']) { should eq student_with_mark.user.last_name }
+          its(['patronymic']) { should eq student_with_mark.user.patronymic }
+        end
+      end
   end
 end

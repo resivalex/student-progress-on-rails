@@ -63,7 +63,11 @@ angular.module 'spDirectives'
   restrict: 'E'
   scope:
     objects: '=spObjects'
+    fields: '=spFields'
   templateUrl: '/angular/objects-table.html'
+  link: (scope) ->
+    unless scope.fields
+      scope.fields = (key for key, value of objects)
 
 .directive 'spSelectList', ->
   restrict: 'E'

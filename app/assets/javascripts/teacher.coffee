@@ -20,18 +20,35 @@ angular.module 'teacherApp', ['spRestApi', 'spDirectives']
 
   $scope.$watch 'currentLessonId', (lessonId) ->
     if lessonId
-      $scope.currentLesson = Lessons.get id: $scope.currentLessonId, ->
-        cur = $scope.currentLesson
-        $scope.currentGroup = Groups.get id: cur.groupId
-        $scope.currentStudents = Groups.getStudents id: cur.groupId, ->
-          $scope.studentsList = $.map $scope.currentStudents, (student) ->
-            id: student.id
-            name: "#{student.lastName} #{student.firstName} #{student.patronymic}"
+      $scope.currentStudentId = null
+      currentLesson = Lessons.get id: lessonId, ->
+        $scope.students = Lessons.getStudents id: lessonId, ->
+          $scope.studentsList = $.map $scope.students, (l) ->
+            id: l.id
+            name: "#{l.lastName} #{l.firstName} #{l.patronymic} #{l.mark ? 'No mark'}"
+    else
+      $scope.students = null
+      $scope.studentsList = null
+      $scope.currentStudentId = null
 
-  $scope.marks = Marks.query ->
-    $scope.marksList = $.map $scope.marks, (mark) ->
-      id: mark.id
-      name: mark.mark
+  $scope.$watch 'currentStudentId', (studentId) ->
+    if studentId
+      $scope.currentMarkId = if $scope.students
+        currentStudent = null
+        for i in $scope.students
+          currentStudent = i if i.id == studentId
+        if currentStudent
+          $scope.currentMarkId = currentStudent.markId
+        else
+          $scope.currentMarkId = null
+    else
+      $scope.currentMarkId = null
+
+  $scope.$watch 'currentMarkId', (markId) ->
+    $scope.markTracks = if markId
+      Marks.tracks id: markId, -> $scope.markTracks.reverse()
+    else
+      []
 
   $scope.addMark = ->
     console.log $scope.currentLessonId, $scope.currentStudentId
@@ -39,5 +56,10 @@ angular.module 'teacherApp', ['spRestApi', 'spDirectives']
         lessonId: $scope.currentLessonId
         studentId: $scope.currentStudentId
         mark: $scope.markName
-      , -> console.log 'Added?'
+        comment: $scope.markComment
+      , ->
+        $scope.markTracks = if $scope.currentMarkId
+          Marks.tracks id: $scope.currentMarkId, -> $scope.markTracks.reverse()
+        else
+          []
 ]

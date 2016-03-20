@@ -1,10 +1,10 @@
 class LessonsController < ApplicationController
   def index
-    @lessons = Lesson.all
+    @lessons = Lesson.to_api
   end
 
   def show
-    @lesson = Lesson.find_by_id params[:id]
+    @lesson = Lesson.find_by_id(params[:id]).rich_struct
     unless @lesson
       render plain: 'Not found', status: :not_found
     end
