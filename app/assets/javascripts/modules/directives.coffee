@@ -78,3 +78,60 @@ angular.module 'spDirectives'
   link: (scope) ->
     scope.idChanged = (clickedId) ->
       scope.id = clickedId
+
+.directive 'spDropdown', ->
+  restrict: 'E'
+  scope:
+    id: '=ngModel'
+    list: '=list'
+    title: '=title'
+  templateUrl: '/angular/dropdown.html'
+  link: (scope) ->
+    scope.groups = [
+        id: 1
+        name: '1'
+      ,
+        id: 2
+        name: '2'
+    ]
+    scope.setId = (id) ->
+      scope.id = id
+    scope.$watch 'list', (list) ->
+      if list && list.length > 0
+        scope.id = list[0].id
+      else
+        scope.id = null
+
+    scope.$watch 'id', (id) ->
+      if id
+        scope.name = null
+        if scope.list
+          for item in scope.list
+            scope.name = item.name if item.id == id
+
+.directive 'spNameDescription', ['$injector', ($injector) ->
+  restrict: 'E'
+  scope: {}
+  templateUrl: '/angular/name-description.html'
+  link: (scope, element, attrs) ->
+    Resource = $injector.get attrs.resource
+    scope.objects = Resource.query()
+
+    scope.update = (id, name, description) ->
+      Resource.update id: id,
+          name: name
+          description: description
+        ,
+          scope.objects = Resource.query()
+
+    scope.add = (name, description) ->
+      Resource.save
+          name: name
+          description: description
+        , ->
+          scope.objects = Resource.query()
+
+    scope.delete = (id) ->
+      Resource.delete id: id, ->
+        scope.objects = Resource.query()
+]

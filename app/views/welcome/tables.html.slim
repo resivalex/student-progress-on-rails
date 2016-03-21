@@ -1,39 +1,112 @@
 - content_for :title, 'Tables'
 
-h1 Tables
+h1 Таблицы
 
-div ng-app="tablesApp"
-  sp-resource-table sp-resource="Auditories" sp-fields="['id', 'name', 'description']"
-  sp-resource-table sp-resource="Groups" sp-fields="['id', 'name', 'description']"
-  sp-resource-table sp-resource="Subjects" sp-fields="['id', 'name', 'description']"
-  sp-resource-table sp-resource="Users" sp-fields="['id', 'firstName', 'lastName', 'patronymic', 'login', 'role', 'email', 'password', 'phone']"
-  sp-resource-table sp-resource="Students" sp-fields="['id', 'userId', 'groupId', 'firstName', 'lastName', 'patronymic']"
-  sp-resource-table sp-resource="Lessons" sp-fields="['id', 'groupId', 'teacherId', 'subjectId', 'auditoryId', 'datetime']"
+div ng-app="tablesApp" ng-controller="TablesCtrl"
+  uib-tabset
+    uib-tab heading="Аудитории"
+      sp-name-description resource="Auditories"
+    uib-tab heading="Группы"
+      sp-name-description resource="Groups"
+    uib-tab heading="Предметы"
+      sp-name-description resource="Subjects"
+    uib-tab heading="Пользователи"
+      div ng-controller="UsersCtrl"
+        table.table
+          tr
+            th
+            th Фамилия
+            th Имя
+            th Отчество
+            th Логин
+            th Роль
+            th E-mail
+            th Пароль
+            th Телефон
+            th
+          tr ng-repeat="user in users" ng-model="editMode"
+            td
+              | {{user.id}}
+            td
+              span ng-hide="editMode"
+                | {{user.lastName}}
+              input.form-control ng-show="editMode" ng-model="lastName"
+            td
+              span ng-hide="editMode"
+                | {{user.firstName}}
+              input.form-control ng-show="editMode" ng-model="lastName"
+            td
+              span ng-hide="editMode"
+                | {{user.patronymic}}
+              input.form-control ng-show="editMode" ng-model="lastName"
+            td
+              | {{user.login}}
+            td
+              span ng-hide="editMode"
+                | {{user.role}}
+              input.form-control ng-show="editMode" ng-model="lastName"
+            td
+              | {{user.email}}
+            td
+              | ***
+            td
+              | {{user.phone}}
+            td
+              button.btn ng-hide="editMode" ng-click="editMode = true" Edit
+              button.btn ng-show="editMode" ng-click="editMode = false; update(student.id, groupId)" Update
+              button.btn ng-show="editMode" ng-click="editMode = false" Cancel
+    uib-tab heading="Студенты"
+      div ng-controller="StudentsCtrl"
+        table.table
+          tr
+            th
+            th Фамилия
+            th Имя
+            th Отчество
+            th Группа
+            th
+          tr ng-repeat="student in students" ng-model="editMode"
+            td
+              |
+                {{student.id}}
+            td
+              | {{student.lastName}}
+            td
+              | {{student.firstName}}
+            td
+              | {{student.patronymic}}
+            td
+              span ng-hide="editMode"
+                | {{student.group | ifEmpty:'Не в группе'}}
+              div
+                sp-dropdown ng-show="editMode" ng-model="groupId" title="'Группа'" list="groupsList"
+            td
+              button.btn ng-hide="editMode" ng-click="editMode = true" Edit
+              button.btn ng-show="editMode" ng-click="editMode = false; update(student.id, groupId)" Update
+              button.btn ng-show="editMode" ng-click="editMode = false" Cancel
 
-  div ng-controller="LessonsCtrl"
-    table class="table"
-      tr
-        td
-          select class="form-control" ng-model="groupId"
-            option ng-repeat="a in groups" ng-value="a.id"
-              | {{a.id}} {{a.name}}
-        td
-          select class="form-control" ng-model="teacherId"
-            option ng-repeat="a in teachers" ng-value="a.id"
-              | {{a.id}} {{a.firstName}} {{a.lastName}} {{a.patronymic}}
-        td
-          select class="form-control" ng-model="subjectId"
-            option ng-repeat="a in subjects" ng-value="a.id"
-              | {{a.id}} {{a.name}}
-        td
-          select class="form-control" ng-model="auditoryId"
-            option ng-repeat="a in auditories" ng-value="a.id"
-              | {{a.id}} {{a.name}}
-        td
-          input class="form-control" ng-model="time"
-        td
-          button class="btn" ng-click="addLesson()" Add lesson
+    uib-tab heading="Заняния"
+      div ng-controller="LessonsCtrl"
+        table class="table"
+          tr
+            td style="vertical-align:middle;"
+              sp-dropdown ng-model="groupId" title="'Группа'" list="groupsList"
+            td style="vertical-align:middle;"
+              sp-dropdown ng-model="teacherId" title="'Преподаватель'" list="teachersList"
+            td style="vertical-align:middle;"
+              sp-dropdown ng-model="subjectId" title="'Предмет'" list="subjectsList"
+            td style="vertical-align:middle;"
+              sp-dropdown ng-model="auditoryId" title="'Аудитория'" list="auditoriesList"
 
-    sp-objects-table sp-objects="lessons" sp-fields="['id', 'group', 'teacher', 'subject', 'auditory']"
-    p ng-repeat="lesson in lessons"
-      | {{lesson.id}} {{lesson.group}} {{lesson.teacher}} {{lesson.subject}} {{lesson.auditory}} {{lesson.datetime}}
+            td style="vertical-align:middle;"
+              p.input-group style="margin:0; width:150px;"
+                input.form-control ng-model="date" uib-datepicker-popup="" datepicker-options="dateOptions" is-open="datepickerOpened"
+                span.input-group-btn
+                  button type="button" class="btn btn-default" ng-click="openDatepicker()"
+                    i class="glyphicon glyphicon-calendar"
+            td
+              uib-timepicker ng-model="time" ng-change="changed()" minute-step="5" show-meridian="ismeridian"
+            td style="vertical-align:middle;"
+              button class="btn" ng-click="addLesson()" Add lesson
+
+        sp-objects-table sp-objects="lessons" sp-fields="['id', 'group', 'teacher', 'subject', 'auditory', 'datetime']"

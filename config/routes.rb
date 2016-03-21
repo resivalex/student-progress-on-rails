@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :subjects
 
-  resources :students, only: [:index, :show, :create]
+  resources :students, only: [:index, :show, :create, :update]
 
   resources :lessons do
     resources :students, only: [:index]

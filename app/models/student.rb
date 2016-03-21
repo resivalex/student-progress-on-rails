@@ -61,4 +61,35 @@ class Student < ActiveRecord::Base
       []
     end
   end
+
+  def self.students_to_api
+    User.students.map do |s|
+      group_id = nil
+      group_name = nil
+      student = Student.where(user_id: s.id).take
+      if student
+        group_id = student.group_id
+        group_name = student.group.name
+      end
+      h = {
+        id: s.id,
+        first_name: s.first_name,
+        last_name: s.last_name,
+        patronymic: s.patronymic,
+        group_id: group_id,
+        group: group_name
+      }
+      OpenStruct.new h
+    end
+  end
+
+  def self.reassign student_id, group_id
+    student = Student.where(user_id: student_id).take
+    if student
+      student.group_id = group_id
+      student.save
+    else
+      false
+    end
+  end
 end

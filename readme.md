@@ -37,6 +37,7 @@ Table of contents
     - [GET](#get)
     - [/:student_id](#student_id)
       - [GET](#get)
+      - [PUT](#put)
       - [/marks](#marks)
         - [GET](#get)
   - [/subjects](#subjects)
@@ -342,6 +343,7 @@ Table of contents
     {
       "id": 5,
       "groupId": "2",
+      "group": "001",
       "firstName": "Ivan",
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich"
@@ -349,6 +351,7 @@ Table of contents
     {
       "id": 9,
       "groupId": null,
+      "group": null,
       "firstName": "Sergey",
       "lastName": "Sergeev",
       "patronymic": "Sergeevich"
@@ -366,6 +369,14 @@ Table of contents
       "firstName": "Ivan",
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich"
+    }
+    ```
+
+  - #### PUT
+    Example request `PUT /students/5.json`
+    ```
+    {
+      "groupId": 3
     }
     ```
 

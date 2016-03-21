@@ -1,0 +1,8 @@
+<div class="btn-group" uib-dropdown>
+  <button type="button" class="btn" uib-dropdown-toggle>{{title}} [{{name}}]<span class="caret"></span></button>
+  <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+    <li role="menuitem" ng-repeat="item in list" ng-click="setId(item.id)">
+      <a href="">{{item.name}}</a>
+    </li>
+  </ul>
+</div>

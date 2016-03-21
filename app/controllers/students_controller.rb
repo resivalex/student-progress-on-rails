@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     elsif lesson_id
       @students = Student.students_by_lesson_to_api lesson_id
     else
-      @students = User.students
+      @students = Student.students_to_api
     end
   end
 
@@ -31,6 +31,14 @@ class StudentsController < ApplicationController
     @student = Student.by_id_to_api params[:id]
     unless @student
       render plain: 'Not found', status: :not_found
+    end
+  end
+
+  def update
+    if Student.reassign params[:id], params[:groupId]
+      render plain: 'OK'
+    else
+      render plain: 'Bad request', status: :bad_request
     end
   end
 end
