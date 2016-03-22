@@ -1,4 +1,4 @@
-angular.module 'tablesApp', ['spRestApi', 'spDirectives', 'ui.bootstrap']
+angular.module 'tablesApp', ['spRestApi', 'spDirectives']
 
 .filter 'ifEmpty', ->
   (input, defaultValue) ->
@@ -7,7 +7,14 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives', 'ui.bootstrap']
     else
       input
 
-.controller 'TablesCtrl', ['$scope', 'Auditories', 'Groups', 'Teachers', 'Subjects', 'Students', 'Users', ($scope, Auditories, Groups, Teachers, Subjects, Students, Users) ->
+.filter 'parseDate', ->
+  (input) ->
+    if angular.isUndefined(input) || input == null || input == ''
+      '-'
+    else
+      new Date(input).toString()
+
+.controller 'TablesCtrl', ['$scope', 'Auditories', 'Groups', 'Teachers', 'Subjects', 'Students', 'Users', 'Lessons', ($scope, Auditories, Groups, Teachers, Subjects, Students, Users, Lessons) ->
   $scope.groups = Groups.query ->
     $scope.groupsList = $.map $scope.groups, (g) ->
       id: g.id
@@ -32,14 +39,47 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives', 'ui.bootstrap']
 
   $scope.users = Users.query()
 
+  $scope.lessons = Lessons.query()
+
+  $scope.$on 'lessonsChanged', -> $scope.lessons = Lessons.query()
+
   $scope.$on 'studentsChanged', -> $scope.students = Students.query()
+
+  $scope.$on 'usersChanged', ->
+    $scope.teachers = Teachers.query ->
+      $scope.teachersList = $.map $scope.teachers, (t) ->
+        id: t.id
+        name: "#{t.lastName} #{t.firstName}"
+
+    $scope.users = Users.query()
 ]
 
 .controller 'UsersCtrl', ['$scope', 'Users', ($scope, Users) ->
-  $scope.rolesList = ['admin', 'chief', 'student', 'teacher']
-  $scope.rolesList = $.map $scope.rolesList, (role) ->
+  $scope.rolesList = $.map ['admin', 'chief', 'student', 'teacher'], (role) ->
     id: role
     name: role
+]
+
+.controller 'UserRowCtrl', ['$scope', 'Users', ($scope, Users) ->
+  $scope.turnOnEditMode = ->
+    $scope.editMode = on
+    $scope.e = $.extend {}, $scope.user
+
+  $scope.turnOffEditMode = ->
+    $scope.editMode = off
+
+  $scope.update = ->
+    Users.update id: $scope.e.id, $scope.e, ->
+      $scope.editMode = off
+      $scope.$emit 'usersChanged'
+
+  $scope.add = ->
+    Users.save $scope.e, ->
+      $scope.$emit 'usersChanged'
+
+  $scope.delete = ->
+    Users.delete id: $scope.user.id, ->
+      $scope.$emit 'usersChanged'
 ]
 
 .controller 'StudentsCtrl', ['$scope', 'Students', ($scope, Students) ->
@@ -52,14 +92,8 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives', 'ui.bootstrap']
 
 .controller 'LessonsCtrl', ['$scope', 'Lessons', ($scope, Lessons) ->
 
-  $scope.groupId = null
-  $scope.setGroupId = (id) ->
-    $scope.groupId = id
-
   $scope.date = new Date()
   $scope.time = (new Date()).setHours 15, 0, 0, 0
-
-  $scope.lessons = Lessons.query ->
 
   $scope.dateOptions =
     formatYear: 'yy'
@@ -81,5 +115,22 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives', 'ui.bootstrap']
     lesson.auditoryId = $scope.auditoryId
     lesson.datetime = datetime
     Lessons.save lesson, ->
-      $scope.lessons = Lessons.query()
+      $scope.$emit 'lessonsChanged'
+]
+
+.controller 'LessonRowCtrl', ['$scope', 'Lessons', ($scope, Lessons) ->
+  $scope.turnOnEditMode = ->
+    $scope.editMode = on
+    $scope.e = $.extend {}, $scope.lesson
+
+  $scope.turnOffEditMode = ->
+    $scope.editMode = off
+
+  $scope.update = ->
+    Lessons.update id: $scope.lesson.id, $scope.e, ->
+      $scope.$emit 'lessonsChanged'
+
+  $scope.delete = ->
+    Lessons.delete id: $scope.lesson.id, ->
+      $scope.$emit 'lessonsChanged'
 ]

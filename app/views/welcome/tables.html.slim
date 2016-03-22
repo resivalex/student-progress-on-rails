@@ -24,37 +24,66 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
             th Пароль
             th Телефон
             th
-          tr ng-repeat="user in users" ng-model="editMode"
+          tr ng-controller="UserRowCtrl" ng-model="e"
+            td
+            td
+              input.form-control type="text" placeholder="Фамилия" ng-model="e.lastName"
+            td
+              input.form-control type="text" placeholder="Имя" ng-model="e.firstName"
+            td
+              input.form-control type="text" placeholder="Отчество" ng-model="e.patronymic"
+            td
+              input.form-control type="text" placeholder="Логин" ng-model="e.login"
+            td
+              sp-dropdown list="rolesList" ng-model="e.role"
+            td
+              input.form-control type="text" placeholder="E-mail" ng-model="e.email"
+            td
+              input.form-control type="text" placeholder="Пароль" ng-model="e.password"
+            td
+              input.form-control type="text" placeholder="Телефон" ng-model="e.phone"
+            td
+              button.btn ng-click="add()" Add
+          tr ng-repeat="user in users" ng-model="editMode" ng-controller="UserRowCtrl"
             td
               | {{user.id}}
             td
               span ng-hide="editMode"
                 | {{user.lastName}}
-              input.form-control ng-show="editMode" ng-model="lastName"
+              input.form-control ng-show="editMode" ng-model="e.lastName"
             td
               span ng-hide="editMode"
                 | {{user.firstName}}
-              input.form-control ng-show="editMode" ng-model="lastName"
+              input.form-control ng-show="editMode" ng-model="e.firstName"
             td
               span ng-hide="editMode"
                 | {{user.patronymic}}
-              input.form-control ng-show="editMode" ng-model="lastName"
+              input.form-control ng-show="editMode" ng-model="e.patronymic"
             td
-              | {{user.login}}
+              span ng-hide="editMode"
+                | {{user.login}}
+              input.form-control ng-show="editMode" ng-model="e.login"
             td
               span ng-hide="editMode"
                 | {{user.role}}
-              input.form-control ng-show="editMode" ng-model="lastName"
+              sp-dropdown ng-show="editMode" list="rolesList" ng-model="e.role"
             td
-              | {{user.email}}
+              span ng-hide="editMode"
+                | {{user.email}}
+              input.form-control ng-show="editMode" ng-model="e.email"
             td
-              | ***
+              span ng-hide="editMode"
+                | ***
+              input.form-control ng-show="editMode" ng-model="e.password"
             td
-              | {{user.phone}}
+              span ng-hide="editMode"
+                | {{user.phone}}
+              input.form-control ng-show="editMode" ng-model="e.phone"
             td
-              button.btn ng-hide="editMode" ng-click="editMode = true" Edit
-              button.btn ng-show="editMode" ng-click="editMode = false; update(student.id, groupId)" Update
-              button.btn ng-show="editMode" ng-click="editMode = false" Cancel
+              button.btn ng-hide="editMode" ng-click="turnOnEditMode()" Edit
+              button.btn ng-hide="editMode" ng-click="delete()" Delete
+              button.btn ng-show="editMode" ng-click="update()" Update
+              button.btn ng-show="editMode" ng-click="turnOffEditMode()" Cancel
     uib-tab heading="Студенты"
       div ng-controller="StudentsCtrl"
         table.table
@@ -89,14 +118,23 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
       div ng-controller="LessonsCtrl"
         table class="table"
           tr
+            th
+            th Группа
+            th Преподаватель
+            th Предмет
+            th Аудитория
+            th Время
+            th colspan="2"
+          tr
+            td
             td style="vertical-align:middle;"
-              sp-dropdown ng-model="groupId" title="'Группа'" list="groupsList"
+              sp-dropdown ng-model="groupId" list="groupsList"
             td style="vertical-align:middle;"
-              sp-dropdown ng-model="teacherId" title="'Преподаватель'" list="teachersList"
+              sp-dropdown ng-model="teacherId" list="teachersList"
             td style="vertical-align:middle;"
-              sp-dropdown ng-model="subjectId" title="'Предмет'" list="subjectsList"
+              sp-dropdown ng-model="subjectId" list="subjectsList"
             td style="vertical-align:middle;"
-              sp-dropdown ng-model="auditoryId" title="'Аудитория'" list="auditoriesList"
+              sp-dropdown ng-model="auditoryId" list="auditoriesList"
 
             td style="vertical-align:middle;"
               p.input-group style="margin:0; width:150px;"
@@ -107,6 +145,34 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
             td
               uib-timepicker ng-model="time" ng-change="changed()" minute-step="5" show-meridian="ismeridian"
             td style="vertical-align:middle;"
-              button class="btn" ng-click="addLesson()" Add lesson
+              button class="btn" ng-click="addLesson()" Add
 
-        sp-objects-table sp-objects="lessons" sp-fields="['id', 'group', 'teacher', 'subject', 'auditory', 'datetime']"
+          tr ng-repeat="lesson in lessons" ng-controller="LessonRowCtrl" ng-model="e"
+            td
+              span
+                | {{lesson.id}}
+            td
+              span ng-hide="editMode"
+                | {{lesson.group}}
+              sp-dropdown ng-show="editMode" list="groupsList" ng-model="e.groupId"
+            td
+              span ng-hide="editMode"
+                | {{lesson.teacher}}
+              sp-dropdown ng-show="editMode" list="teachersList" ng-model="e.teacherId"
+            td
+              span ng-hide="editMode"
+                | {{lesson.subject}}
+              sp-dropdown ng-show="editMode" list="subjectsList" ng-model="e.subjectId"
+            td
+              span ng-hide="editMode"
+                | {{lesson.auditory}}
+              sp-dropdown ng-show="editMode" list="auditoriesList" ng-model="e.auditoryId"
+            td colspan="2"
+              span ng-hide="editMode"
+                | {{lesson.datetime | parseDate}}
+              input.form-control ng-show="editMode" type="text" ng-model="e.datetime"
+            td
+              button.btn ng-hide="editMode" ng-click="turnOnEditMode()" Edit
+              button.btn ng-hide="editMode" ng-click="delete()" Delete
+              button.btn ng-show="editMode" ng-click="update()" Update
+              button.btn ng-show="editMode" ng-click="turnOffEditMode()" Cancel

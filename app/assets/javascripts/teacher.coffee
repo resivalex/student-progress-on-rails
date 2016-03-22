@@ -18,6 +18,10 @@ angular.module 'teacherApp', ['spRestApi', 'spDirectives']
       id: lesson.id
       name: lesson.datetime
 
+  $scope.marksList = $.map ['5', '4', '3', '2', 'н'], (mark) ->
+    id: mark
+    name: mark
+
   $scope.$watch 'currentLessonId', (lessonId) ->
     if lessonId
       $scope.currentStudentId = null

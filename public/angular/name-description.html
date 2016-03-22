@@ -35,7 +35,7 @@
       <td>
         <button class="btn ng-hide" ng-show="row.editMode" ng-click="row.editMode = false; update(object.id, row.name, row.description)">Update</button>
         <button class="btn ng-hide" ng-show="row.editMode" ng-click="row.editMode = false">Cancel</button>
-        <button class="btn" ng-hide="row.editMode" ng-click="row.editMode = true">Edit</button>
+        <button class="btn" ng-hide="row.editMode" ng-click="row.editMode = true; row.name = object.name; row.description = object.description">Edit</button>
         <button class="btn" ng-hide="row.editMode" ng-click="row.editMode = false; delete(object.id)">Delete</button>
       </td>
     </tr>

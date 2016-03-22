@@ -191,9 +191,13 @@ Table of contents
     {
       "id": 6,
       "groupId": 2,
+      "group": "081-1004",
       "teacherId": 10,
+      "teacher": "Губарев Валентин Юрьевич",
       "subjectId": 3,
+      "subject": "Math",
       "auditoryId": 7,
+      "auditory": "215",
       "datetime": "2016-04-03T15:30:00+03"
     }
   ]
@@ -207,10 +211,14 @@ Table of contents
     ```
     {
       "groupId": 2,
+      "group": "081-1004",
       "teacherId": 10,
+      "teacher": "Губарев Валентин Юрьевич",
       "subjectId": 3,
+      "subject": "Math",
       "auditoryId": 7,
-      "datetime": "2016-04-03T17:00:00+03"
+      "auditory": "215",
+      "datetime": "2016-04-03T15:30:00+03"
     }
     ```
 
@@ -343,7 +351,7 @@ Table of contents
     {
       "id": 5,
       "groupId": "2",
-      "group": "001",
+      "group": "081-1004",
       "firstName": "Ivan",
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich"
@@ -368,7 +376,9 @@ Table of contents
     {
       "firstName": "Ivan",
       "lastName": "Reshetnikov",
-      "patronymic": "Alexandrovich"
+      "patronymic": "Alexandrovich",
+      "groupId": 2,
+      "group": "081-1004"
     }
     ```
 
@@ -381,6 +391,7 @@ Table of contents
     ```
 
   - #### /marks
+  
     - #### GET
       Example request `GET /students/5/marks.json`
       ```

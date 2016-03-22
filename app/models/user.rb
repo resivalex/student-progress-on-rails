@@ -17,12 +17,22 @@ class User < ActiveRecord::Base
   scope :students, -> { where(role: 'student') }
   scope :teachers, -> { where(role: 'teacher') }
 
+  has_secure_password
+
   def admin?
     role == 'admin'
   end
 
   def teacher?
     role == 'teacher'
+  end
+
+  def chief?
+    role == 'chief'
+  end
+
+  def student?
+    role == 'student'
   end
 
   def to_api

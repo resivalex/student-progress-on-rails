@@ -1,4 +1,4 @@
-angular.module 'spDirectives', []
+angular.module 'spDirectives', ['ui.bootstrap']
 
 angular.module 'spDirectives'
 .directive 'spResourceTable', ['$injector', ($injector) ->
@@ -84,16 +84,10 @@ angular.module 'spDirectives'
   scope:
     id: '=ngModel'
     list: '=list'
-    title: '=title'
   templateUrl: '/angular/dropdown.html'
-  link: (scope) ->
-    scope.groups = [
-        id: 1
-        name: '1'
-      ,
-        id: 2
-        name: '2'
-    ]
+  link: (scope, element, attrs) ->
+    scope.title = attrs.title
+
     scope.setId = (id) ->
       scope.id = id
     scope.$watch 'list', (list) ->

@@ -59,6 +59,7 @@ describe 'Subjects API' do
 
       subject { json }
       its(['groupId']) { should eq student.group_id }
+      its(['group']) { should eq student.group.name }
       its(['firstName']) { should eq student_user.first_name }
       its(['lastName']) { should eq student_user.last_name }
       its(['patronymic']) { should eq student_user.patronymic }

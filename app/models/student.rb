@@ -9,9 +9,10 @@ class Student < ActiveRecord::Base
 
   def self.by_id_to_api id
     query = <<-SQL
-      SELECT users.id AS id, group_id, first_name, last_name, patronymic
+      SELECT users.id AS id, group_id, first_name, last_name, patronymic, groups.name AS group_name
       FROM users
       LEFT OUTER JOIN students ON users.id = students.user_id
+      JOIN groups ON students.group_id = groups.id
       WHERE role = 'student'
     SQL
     students = ActiveRecord::Base.connection.execute query
@@ -22,6 +23,7 @@ class Student < ActiveRecord::Base
       f = student
       s = {
         group_id: f['group_id'],
+        group: f['group_name'],
         first_name: f['first_name'],
         last_name: f['last_name'],
         patronymic: f['patronymic'],
