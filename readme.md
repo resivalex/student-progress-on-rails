@@ -391,7 +391,6 @@ Table of contents
     ```
 
   - #### /marks
-  
     - #### GET
       Example request `GET /students/5/marks.json`
       ```
