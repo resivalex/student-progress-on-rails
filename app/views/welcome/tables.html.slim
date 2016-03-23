@@ -18,7 +18,6 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
             th Фамилия
             th Имя
             th Отчество
-            th Логин
             th Роль
             th E-mail
             th Пароль
@@ -32,8 +31,6 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
               input.form-control type="text" placeholder="Имя" ng-model="e.firstName"
             td
               input.form-control type="text" placeholder="Отчество" ng-model="e.patronymic"
-            td
-              input.form-control type="text" placeholder="Логин" ng-model="e.login"
             td
               sp-dropdown list="rolesList" ng-model="e.role"
             td
@@ -59,10 +56,6 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
               span ng-hide="editMode"
                 | {{user.patronymic}}
               input.form-control ng-show="editMode" ng-model="e.patronymic"
-            td
-              span ng-hide="editMode"
-                | {{user.login}}
-              input.form-control ng-show="editMode" ng-model="e.login"
             td
               span ng-hide="editMode"
                 | {{user.role}}

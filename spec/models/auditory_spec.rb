@@ -1,12 +1,11 @@
-describe Auditory do
+RSpec.describe Auditory do
   describe 'convertion to API format' do
-    auditory = FactoryGirl.build :auditory
-    subject do
-      auditory.to_api
-    end
+    let!(:auditory) { FactoryGirl.build :auditory }
 
-    its([:id]) { should eq auditory.id }
-    its([:name]) { should eq auditory.name }
+    subject { auditory.to_api }
+
+    its([:id])          { should eq auditory.id }
+    its([:name])        { should eq auditory.name }
     its([:description]) { should eq auditory.description }
   end
 
@@ -17,7 +16,7 @@ describe Auditory do
       Auditory.new.from_api data
     end
 
-    its(:name) { should eq data[:name] }
-    its(:description) { should eq data[:description] }
+    its(:name)          { should eq data[:name] }
+    its(:description)   { should eq data[:description] }
   end
 end

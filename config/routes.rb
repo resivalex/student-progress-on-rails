@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/login' => 'login#index'
+
+  post '/session' => 'session#create'
+  delete '/session' => 'session#destroy'
+
   get '/timetable' => 'welcome#timetable'
   get '/tables' => 'welcome#tables'
   get '/teacher' => 'welcome#teacher'
@@ -41,9 +45,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :tables, only: [:index, :show]
   end
-
-  get '/admin' => 'admin#index'
-  get '/admin/(*tail)' => 'admin#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

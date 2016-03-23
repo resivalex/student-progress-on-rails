@@ -1,10 +1,8 @@
-require 'rails_helper.rb'
-
-describe 'Teachers API' do
+RSpec.describe 'Teachers API' do
   shared_examples 'teacher record' do
-    its(['id']) { should eq teacher.id }
-    its(['firstName']) { should eq teacher.first_name }
-    its(['lastName']) { should eq teacher.last_name }
+    its(['id'])         { should eq teacher.id }
+    its(['firstName'])  { should eq teacher.first_name }
+    its(['lastName'])   { should eq teacher.last_name }
     its(['patronymic']) { should eq teacher.patronymic }
   end
 
@@ -35,8 +33,8 @@ describe 'Teachers API' do
       before { get '/teachers' }
 
       its(:length) { should eq 2 }
-      it { expect(subject[0]['id']).to eq teachers[0].id }
-      it { expect(subject.map {|a| a['id']}).to match_array teachers.map(&:id) }
+      it { expect(json[0]['id']).to eq teachers[0].id }
+      it { expect(json.map {|a| a['id']}).to match_array teachers.map(&:id) }
     end
   end
 
@@ -53,16 +51,16 @@ describe 'Teachers API' do
 
   describe 'GET /teachers/:teacher_id/marks' do
     context '2 teachers, 3 marks, 4 tracks' do
-      let!(:lesson1) { FactoryGirl.create :lesson }
-      let!(:lesson2) { FactoryGirl.create :lesson, teacher: lesson1.teacher }
-      let!(:lesson3) { FactoryGirl.create :lesson }
-      let!(:mark1) { FactoryGirl.create :mark, lesson: lesson1 }
-      let!(:mark2) { FactoryGirl.create :mark, lesson: lesson2 }
-      let!(:mark3) { FactoryGirl.create :mark, lesson: lesson3 }
-      let!(:track1) { FactoryGirl.create :mark_track, mark: mark1 }
-      let!(:track2) { FactoryGirl.create :mark_track, mark: mark2, created_at: 1.minute.ago }
-      let!(:track3) { FactoryGirl.create :mark_track, mark: mark2 }
-      let!(:track4) { FactoryGirl.create :mark_track, mark: mark3 }
+      let!(:lesson1)  { FactoryGirl.create :lesson }
+      let!(:lesson2)  { FactoryGirl.create :lesson, teacher: lesson1.teacher }
+      let!(:lesson3)  { FactoryGirl.create :lesson }
+      let!(:mark1)    { FactoryGirl.create :mark, lesson: lesson1 }
+      let!(:mark2)    { FactoryGirl.create :mark, lesson: lesson2 }
+      let!(:mark3)    { FactoryGirl.create :mark, lesson: lesson3 }
+      let!(:track1)   { FactoryGirl.create :mark_track, mark: mark1 }
+      let!(:track2)   { FactoryGirl.create :mark_track, mark: mark2, created_at: 1.minute.ago }
+      let!(:track3)   { FactoryGirl.create :mark_track, mark: mark2 }
+      let!(:track4)   { FactoryGirl.create :mark_track, mark: mark3 }
 
       it 'lists last tracks' do
         get "/teachers/#{lesson1.teacher.id}/marks.json"

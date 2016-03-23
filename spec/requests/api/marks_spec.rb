@@ -1,6 +1,4 @@
-require 'rails_helper.rb'
-
-describe 'Marks API' do
+RSpec.describe 'Marks API' do
   let!(:lesson) { FactoryGirl.create :lesson }
   let!(:student) { FactoryGirl.create :student }
   let!(:mark_data) do
@@ -71,14 +69,14 @@ describe 'Marks API' do
 
       before { get '/marks.json' }
 
-      subject { json[0] }
-
       it { expect(json.length).to eq 1 }
-      its(['id']) { should eq mark.id }
-      its(['mark']) { should eq mark_track.name }
-      its(['comment']) { should eq mark_track.comment }
-      its(['lessonId']) { should eq mark.lesson_id }
-      its(['studentId']) { should eq mark.student_id }
+
+      subject { json[0] }
+      its(['id'])         { should eq mark.id }
+      its(['mark'])       { should eq mark_track.name }
+      its(['comment'])    { should eq mark_track.comment }
+      its(['lessonId'])   { should eq mark.lesson_id }
+      its(['studentId'])  { should eq mark.student_id }
     end
   end
 
@@ -101,14 +99,14 @@ describe 'Marks API' do
       describe 'retrieves element' do
         before { get "/marks/#{mark.id}.json" }
 
-        subject { json }
-
         it { expect(response).to be_success }
-        its(['id']) { should be_nil }
-        its(['mark']) { should eq mark_track.name }
-        its(['comment']) { should eq mark_track.comment }
-        its(['lessonId']) { should eq mark.lesson_id }
-        its(['studentId']) { should eq mark.student_id }
+
+        subject { json }
+        its(['id'])         { should be_nil }
+        its(['mark'])       { should eq mark_track.name }
+        its(['comment'])    { should eq mark_track.comment }
+        its(['lessonId'])   { should eq mark.lesson_id }
+        its(['studentId'])  { should eq mark.student_id }
       end
     end
   end
@@ -119,13 +117,13 @@ describe 'Marks API' do
 
       before { get "/marks/#{mark.id}/tracks.json" }
 
-      subject { json[0] }
       it { expect(response).to be_success }
       it { expect(json.length).to eq 1 }
 
-      its(['id']) { should be_nil }
-      its(['mark']) { should eq mark_track.name }
-      its(['comment']) { should eq mark_track.comment }
+      subject { json[0] }
+      its(['id'])       { should be_nil }
+      its(['mark'])     { should eq mark_track.name }
+      its(['comment'])  { should eq mark_track.comment }
       its(['datetime']) { should eq mark_track.api_time }
     end
   end

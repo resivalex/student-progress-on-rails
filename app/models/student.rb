@@ -68,7 +68,7 @@ class Student < ActiveRecord::Base
     User.students.map do |s|
       group_id = nil
       group_name = nil
-      student = Student.where(user_id: s.id).take
+      student = Student.find_by_user_id s.id
       if student
         group_id = student.group_id
         group_name = student.group.name
@@ -86,7 +86,7 @@ class Student < ActiveRecord::Base
   end
 
   def self.reassign student_id, group_id
-    student = Student.where(user_id: student_id).take
+    student = Student.find_by_user_id student_id
     if student
       student.group_id = group_id
       student.save

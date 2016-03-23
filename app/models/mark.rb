@@ -27,7 +27,7 @@ class Mark < ActiveRecord::Base
     student_id = data[:studentId]
 
     if Lesson.exists?(lesson_id) && Student.exists?(student_id)
-      mark = Mark.where(lesson_id: lesson_id).where(student_id: student_id).take
+      mark = Mark.where(lesson_id: lesson_id, student_id: student_id).take
       mark ||= Mark.create do |m|
         m.lesson_id = lesson_id
         m.student_id = student_id

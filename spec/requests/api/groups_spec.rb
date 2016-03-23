@@ -1,11 +1,8 @@
-require 'rails_helper.rb'
-
-describe 'Groups API' do
-  include_examples 'name-description resource', {
+RSpec.describe 'Groups API' do
+  it_behaves_like 'name-description resource',
     resource: 'groups',
     factory_name: :group,
     model: Group
-  }
 
   describe '/groups/:id/students' do
     include_context '3 students in 2 groups'

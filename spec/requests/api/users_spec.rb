@@ -1,54 +1,91 @@
-require 'rails_helper.rb'
-
-describe 'Users API' do
-  it '#index' do
-    FactoryGirl.create :user
-
-    get '/users.json'
-
-    expect(response).to be_success
-
-    expect(json.length).to eq 1
+RSpec.describe 'Users API' do
+  shared_examples 'user record' do
+    its(['firstName'])  { should eq user.first_name }
+    its(['lastName'])   { should eq user.last_name }
+    its(['patronymic']) { should eq user.patronymic }
+    its(['email'])      { should eq user.email }
+    its(['password'])   { should be_nil }
+    its(['phone'])      { should eq user.phone }
   end
 
-  it '#show' do
-    user = FactoryGirl.create :user
-    get "/users/#{user.id}.json"
+  describe 'GET /users.json' do
+    let!(:user) { FactoryGirl.create :user }
 
-    expect(response).to be_success
+    before { get '/users.json' }
 
-    expect(json['firstName']).to eq user.first_name
-    expect(json['password']).to be_nil
+    it { expect(response).to be_success }
+    it { expect(json.length).to eq 1 }
+
+    subject { json[0] }
+    it_behaves_like 'user record'
   end
 
-  it '#create' do
-    user = FactoryGirl.build :user
-    data = user.to_api
+  describe 'GET /users/:id.json' do
+    let!(:user) { FactoryGirl.create :user }
 
-    post '/users.json', data
+    before { get "/users/#{user.id}.json" }
 
-    user = User.take
+    it { expect(response).to be_success }
 
-    expect(User.count).to eql 1
-    expect(user.first_name).to eql data[:firstName]
+    subject { json }
+    it_behaves_like 'user record'
   end
 
-  it '#update' do
-    user = FactoryGirl.create :user
-    data = user.to_api
-    data[:firstName] += '_'
+  describe 'POST /users.json' do
+    let!(:user) { FactoryGirl.build :user }
+    let(:data) do
+      data = user.to_api
+      data[:password] = 'password'
+      data
+    end
 
-    put "/users/#{user.id}.json", data
+    before { post '/users.json', data }
 
-    expect(User.count).to eql 1
-    expect(User.take.first_name).to eql data[:firstName]
+    it { expect(User.count).to eql 1 }
+    it { expect(User.take.first_name).to eql data[:firstName] }
   end
 
-  it '#destroy' do
-    user = FactoryGirl.create :user
+  describe 'PUT /users/:id.json' do
+    let!(:user) { FactoryGirl.create :user }
+    let!(:old_password_digest) { user.password_digest }
 
-    delete "/users/#{user.id}.json"
+    context 'password not empty' do
+      let!(:data) do
+        data = user.to_api
+        data[:firstName] += '_'
+        data[:password] = 'new password'
+        data
+      end
 
-    expect(User.count).to eql 0
+      before { put "/users/#{user.id}.json", data }
+
+      it { expect(response).to be_success }
+      it { expect(User.count).to eql 1 }
+      it { expect(User.take.first_name).to eq data[:firstName] }
+      it { expect(User.take.password_digest).to_not eq old_password_digest }
+    end
+
+    context 'password empty' do
+      let!(:data) do
+        data = user.to_api
+        data[:firstName] += '_'
+        data[:password] = ''
+        data
+      end
+
+      before { put "/users/#{user.id}.json", data }
+
+      it { expect(User.count).to eql 1 }
+      it { expect(User.take.first_name).to eql data[:firstName] }
+      it { expect(User.take.password_digest).to eq old_password_digest }
+    end
+  end
+
+  describe 'DELETE /users/:id.json' do
+    let!(:user) { FactoryGirl.create :user }
+
+    before { delete "/users/#{user.id}.json" }
+
+    it { expect(User.count).to eql 0 }
   end
 end

@@ -2,9 +2,9 @@ p = flash[:message]
 
 | Login page
 
-form
-  | Login
-  input#login type='text' name='login'
+form action="/session"
+  | E-mail
+  input type='text' name='email'
   | Password
-  input#password type='password' name='password'
+  input type='password' name='password'
   input type='submit' value='Log in'

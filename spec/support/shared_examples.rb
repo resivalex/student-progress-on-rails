@@ -1,49 +1,64 @@
 RSpec.shared_examples "name-description resource" do |options|
-  it '#index' do
-    object = FactoryGirl.create options[:factory_name]
+  model =         options[:model]
+  factory_name =  options[:factory_name]
+  resource =      options[:resource]
 
-    get "/#{options[:resource]}.json"
-
-    expect(response).to be_success
-
-    expect(json.length).to eq 1
-    expect(json[0]['name']).to eq object.name
+  shared_context 'name-description record' do
+    its(['name'])         { should eq object.name }
+    its(['description'])  { should eq object.description }
   end
 
-  it '#show' do
-    object = FactoryGirl.create options[:factory_name]
-    get "/#{options[:resource]}/#{object.id}.json"
+  let(:data) { FactoryGirl.build(factory_name).to_api }
 
-    expect(response).to be_success
-    expect(json['name']).to eq object.name
+  describe 'GET /#{resource}.json' do
+    let!(:object) { FactoryGirl.create factory_name }
+
+    before { get "/#{resource}.json" }
+
+    it { expect(response).to be_success }
+
+    it { expect(json.length).to eq 1 }
+
+    subject { json[0] }
+    it_behaves_like 'name-description record'
   end
 
-  it '#create' do
-    data = FactoryGirl.build(options[:factory_name]).to_api
+  describe 'GET /#{resource}/:id.json' do
+    let!(:object) { FactoryGirl.create factory_name }
 
-    post "/#{options[:resource]}.json", data
+    before { get "/#{resource}/#{object.id}.json" }
 
-    object = options[:model].take
+    it { expect(response).to be_success }
 
-    expect(options[:model].count).to eq 1
-    expect(object.name).to eq data[:name]
+    subject { json }
+    it_behaves_like 'name-description record'
   end
 
-  it '#update' do
-    data = FactoryGirl.create(options[:factory_name]).to_api
-    data[:name] += '_'
+  describe 'POST /#{resource}.json' do
+    before { post "/#{resource}.json", data }
 
-    put "/#{options[:resource]}/#{data[:id]}.json", data
-
-    expect(options[:model].count).to eq 1
-    expect(options[:model].take.name).to eq data[:name]
+    it { expect(model.count).to eq 1 }
+    it { expect(model.take.name).to eq data[:name] }
   end
 
-  it '#destroy' do
-    object = FactoryGirl.create options[:factory_name]
+  describe 'PUT /#{resource}/:id.json' do
+    let!(:data2) do
+      data2 = FactoryGirl.create(factory_name).to_api
+      data2[:name] += '_'
+      data2
+    end
 
-    delete "/#{options[:resource]}/#{object.id}.json"
+    before { put "/#{resource}/#{data2[:id]}.json", data2 }
 
-    expect(options[:model].count).to eq 0
+    it { expect(model.count).to eq 1 }
+    it { expect(model.take.name).to eq data2[:name] }
+  end
+
+  describe 'DELETE /#{resource}/:id.json' do
+    let!(:object) { FactoryGirl.create factory_name }
+
+    before { delete "/#{resource}/#{object.id}.json" }
+
+    it { expect(model.count).to eq 0 }
   end
 end

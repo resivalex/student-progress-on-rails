@@ -1,8 +1,4 @@
 FactoryGirl.define do
-  sequence :login do |n|
-    "login#{n}"
-  end
-
   sequence :email do |n|
     "person#{n}@example.com"
   end
@@ -15,10 +11,6 @@ FactoryGirl.define do
     "name #{n}"
   end
 
-  sequence :index do |n|
-    n
-  end
-
   sequence :description do |n|
     "description description description #{n}"
   end
@@ -27,11 +19,10 @@ FactoryGirl.define do
     first_name 'Ivan'
     last_name  'Reshetnikov'
     patronymic 'Alexandrovich'
-    login { generate :login }
     password '343434'
     role 'student'
-    email { generate :email }
-    phone { generate :phone }
+    email
+    phone
 
     factory :student_user do
       role 'student'
@@ -70,13 +61,13 @@ FactoryGirl.define do
   end
 
   factory :auditory do
-    name { generate :name }
-    description { generate :description }
+    name
+    description
   end
 
   factory :group do
-    name { generate :name }
-    description { generate :description }
+    name
+    description
 
     factory :with_students do
       transient do
@@ -90,8 +81,8 @@ FactoryGirl.define do
   end
 
   factory :subject do
-    name { generate :name }
-    description { generate :description }
+    name
+    description
   end
 
   factory :mark do

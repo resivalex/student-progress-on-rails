@@ -512,7 +512,6 @@ Table of contents
     "lastName": "Reshetnikov",
     "patronymic": "Alexandrovich",
     "email": "mail@example.com",
-    "login": "login1",
     "password": "p455w0rd",
     "phone": "123-456"
   }
@@ -530,7 +529,6 @@ Table of contents
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich",
       "email": "mail@example.com",
-      "login": "login1",
       "role": "student",
       "phone": "123-456"
     }
@@ -546,7 +544,6 @@ Table of contents
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich",
       "email": "another@example.com",
-      "login": "login1",
       "password": "p455w0rd",
       "phone": "123-456"
     }
@@ -563,7 +560,6 @@ Table of contents
       "lastName": "Reshetnikov",
       "patronymic": "Alexandrovich",
       "email": "mail@example.com",
-      "login": "login1",
       "role": "student",
       "phone": "123-456"
     }
