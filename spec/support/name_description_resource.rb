@@ -35,10 +35,20 @@ RSpec.shared_examples "name-description resource" do |options|
   end
 
   describe 'POST /#{resource}.json' do
-    before { post "/#{resource}.json", data }
+    context 'when unauthorized' do
+      before { post "/#{resource}.json", data }
 
-    it { expect(model.count).to eq 1 }
-    it { expect(model.take.name).to eq data[:name] }
+      it_behaves_like 'private resource'
+    end
+
+    context 'when authorized' do
+      include_context 'authorized admin'
+
+      before { post "/#{resource}.json", data }
+
+      it { expect(model.count).to eq 1 }
+      it { expect(model.take.name).to eq data[:name] }
+    end
   end
 
   describe 'PUT /#{resource}/:id.json' do
@@ -48,17 +58,37 @@ RSpec.shared_examples "name-description resource" do |options|
       data2
     end
 
-    before { put "/#{resource}/#{data2[:id]}.json", data2 }
+    context 'when unauthorized' do
+      before { put "/#{resource}/#{data2[:id]}.json", data2 }
 
-    it { expect(model.count).to eq 1 }
-    it { expect(model.take.name).to eq data2[:name] }
+      it_behaves_like 'private resource'
+    end
+
+    context 'when authorized' do
+      include_context 'authorized admin'
+
+      before { put "/#{resource}/#{data2[:id]}.json", data2 }
+
+      it { expect(model.count).to eq 1 }
+      it { expect(model.take.name).to eq data2[:name] }
+    end
   end
 
   describe 'DELETE /#{resource}/:id.json' do
     let!(:object) { FactoryGirl.create factory_name }
 
-    before { delete "/#{resource}/#{object.id}.json" }
+    context 'when unauthorized' do
+      before { delete "/#{resource}/#{object.id}.json" }
 
-    it { expect(model.count).to eq 0 }
+      it_behaves_like 'private resource'
+    end
+
+    context 'when authorized' do
+      include_context 'authorized admin'
+
+      before { delete "/#{resource}/#{object.id}.json" }
+
+      it { expect(model.count).to eq 0 }
+    end
   end
 end

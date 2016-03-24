@@ -21,4 +21,6 @@ RSpec.describe LoginController do
       expect(session[:user_id]).to be_nil
     end
   end
+
+  after { session[:user_id] = nil }
 end

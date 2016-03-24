@@ -48,24 +48,4 @@ RSpec.describe 'Teachers API' do
       it_behaves_like 'teacher record'
     end
   end
-
-  describe 'GET /teachers/:teacher_id/marks' do
-    context '2 teachers, 3 marks, 4 tracks' do
-      let!(:lesson1)  { FactoryGirl.create :lesson }
-      let!(:lesson2)  { FactoryGirl.create :lesson, teacher: lesson1.teacher }
-      let!(:lesson3)  { FactoryGirl.create :lesson }
-      let!(:mark1)    { FactoryGirl.create :mark, lesson: lesson1 }
-      let!(:mark2)    { FactoryGirl.create :mark, lesson: lesson2 }
-      let!(:mark3)    { FactoryGirl.create :mark, lesson: lesson3 }
-      let!(:track1)   { FactoryGirl.create :mark_track, mark: mark1 }
-      let!(:track2)   { FactoryGirl.create :mark_track, mark: mark2, created_at: 1.minute.ago }
-      let!(:track3)   { FactoryGirl.create :mark_track, mark: mark2 }
-      let!(:track4)   { FactoryGirl.create :mark_track, mark: mark3 }
-
-      it 'lists last tracks' do
-        get "/teachers/#{lesson1.teacher.id}/marks.json"
-        expect(json.map{|a| a['id']}).to match_array [mark1.id, mark2.id]
-      end
-    end
-  end
 end

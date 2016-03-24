@@ -1,4 +1,10 @@
 module NameDescriptionController
+  extend ActiveSupport::Concern
+
+  included do
+    before_filter :require_admin, only: [:create, :update, :destroy]
+  end
+
   def index
     @objects = model.all
     render 'name_description/index'

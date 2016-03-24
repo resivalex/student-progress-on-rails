@@ -16,115 +16,120 @@ RSpec.describe 'Marks API' do
   end
 
   describe 'POST /marks' do
-    context 'no marks' do
-      before do
-        post '/marks', mark_data
-      end
+    context 'when unauthorized' do
+      before { post '/marks', mark_data }
 
-      it 'creates mark' do
-        expect(Mark.count).to eq 1
-        expect(Mark.take.lesson_id).to eq mark_data[:lessonId]
-        expect(Mark.take.student_id).to eq mark_data[:studentId]
-      end
-
-      it 'adds track' do
-        expect(MarkTrack.count).to eq 1
-        expect(MarkTrack.take.name).to eq mark_data[:mark]
-        expect(MarkTrack.take.comment).to eq mark_data[:comment]
-      end
-
-      it 'links track' do
-        expect(MarkTrack.take.mark_id).to eq Mark.take.id
-      end
+      it_behaves_like 'private resource'
     end
 
-    context 'mark exists already' do
-      include_context 'one mark'
+    context 'when authorized' do
+      include_context 'authorized teacher'
 
-      before do
-        post '/marks.json', mark_data
+      context 'no marks' do
+        before { post '/marks', mark_data }
+
+        it 'creates mark' do
+          expect(Mark.count).to eq 1
+          expect(Mark.take.lesson_id).to eq mark_data[:lessonId]
+          expect(Mark.take.student_id).to eq mark_data[:studentId]
+        end
+
+        it 'adds track' do
+          expect(MarkTrack.count).to eq 1
+          expect(MarkTrack.take.name).to eq mark_data[:mark]
+          expect(MarkTrack.take.comment).to eq mark_data[:comment]
+        end
+
+        it 'links track' do
+          expect(MarkTrack.take.mark_id).to eq Mark.take.id
+        end
       end
 
-      it 'doesn\'t create mark' do
-        expect(Mark.count).to eq 1
+      context 'mark exists already' do
+        include_context 'one mark'
+
+        before do
+          post '/marks.json', mark_data
+        end
+
+        it 'doesn\'t create mark' do
+          expect(Mark.count).to eq 1
+        end
+
+        it 'adds track' do
+          expect(MarkTrack.count).to eq 2
+        end
       end
-
-      it 'adds track' do
-        expect(MarkTrack.count).to eq 2
-      end
-    end
-  end
-
-  describe 'GET /marks' do
-    context 'no marks' do
-      before { get '/marks.json' }
-
-      it 'renders empty array' do
-        expect(json.length).to eq 0
-      end
-    end
-
-    context 'one mark' do
-      include_context 'one mark'
-
-      before { get '/marks.json' }
-
-      it { expect(json.length).to eq 1 }
-
-      subject { json[0] }
-      its(['id'])         { should eq mark.id }
-      its(['mark'])       { should eq mark_track.name }
-      its(['comment'])    { should eq mark_track.comment }
-      its(['lessonId'])   { should eq mark.lesson_id }
-      its(['studentId'])  { should eq mark.student_id }
     end
   end
 
   describe 'GET /marks/:id' do
-    context 'no marks' do
-      it 'not found' do
-        get '/marks/1.json'
-        expect(response).to be_not_found
-      end
-    end
-
-    context 'one mark' do
+    context 'when unauthorized' do
       include_context 'one mark'
 
-      it 'not found' do
-        get "/marks/#{mark.id + 1}.json"
-        expect(response).to be_not_found
+      before { get "/marks/#{mark.id}.json" }
+
+      it_behaves_like 'private resource'
+    end
+
+    context 'when authorized' do
+      include_context 'authorized teacher'
+
+      context 'no marks' do
+        it 'not found' do
+          get '/marks/1.json'
+          expect(response).to be_not_found
+        end
       end
 
-      describe 'retrieves element' do
-        before { get "/marks/#{mark.id}.json" }
+      context 'one mark' do
+        include_context 'one mark'
 
-        it { expect(response).to be_success }
+        it 'not found' do
+          get "/marks/#{mark.id + 1}.json"
+          expect(response).to be_not_found
+        end
 
-        subject { json }
-        its(['id'])         { should be_nil }
-        its(['mark'])       { should eq mark_track.name }
-        its(['comment'])    { should eq mark_track.comment }
-        its(['lessonId'])   { should eq mark.lesson_id }
-        its(['studentId'])  { should eq mark.student_id }
+        describe 'retrieves element' do
+          before { get "/marks/#{mark.id}.json" }
+
+          it { expect(response).to be_success }
+
+          subject { json }
+          its(['id'])         { should be_nil }
+          its(['mark'])       { should eq mark_track.name }
+          its(['comment'])    { should eq mark_track.comment }
+          its(['lessonId'])   { should eq mark.lesson_id }
+          its(['studentId'])  { should eq mark.student_id }
+        end
       end
     end
   end
 
   describe 'GET /marks/:id/tracks' do
-    context 'one mark' do
-      include_context 'one mark'
+    include_context 'one mark'
 
+    context 'when unauthorized' do
       before { get "/marks/#{mark.id}/tracks.json" }
 
-      it { expect(response).to be_success }
-      it { expect(json.length).to eq 1 }
+      it_behaves_like 'private resource'
+    end
 
-      subject { json[0] }
-      its(['id'])       { should be_nil }
-      its(['mark'])     { should eq mark_track.name }
-      its(['comment'])  { should eq mark_track.comment }
-      its(['datetime']) { should eq mark_track.api_time }
+    context 'when authorized' do
+      include_context 'authorized teacher'
+
+      context 'one mark' do
+        before { get "/marks/#{mark.id}/tracks.json" }
+
+        it { expect(response).to be_success }
+        it { expect(json.length).to eq 1 }
+
+        subject { json[0] }
+        its(['id'])       { should be_nil }
+        its(['mark'])     { should eq mark_track.name }
+        its(['comment'])  { should eq mark_track.comment }
+        its(['datetime']) { should eq mark_track.api_time }
+      end
     end
   end
 end

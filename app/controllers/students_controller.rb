@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController
+  before_filter :require_admin, only: [:create, :update]
+
   def index
     group_id = params[:group_id]
     lesson_id = params[:lesson_id]

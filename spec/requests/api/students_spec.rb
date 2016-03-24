@@ -20,14 +20,24 @@ RSpec.describe 'Subjects API' do
       }
     end
 
-    before { post '/students.json', data }
+    context 'when unauthorized' do
+      before { post '/students.json', data }
 
-    it { expect(response).to be_success }
-    it { expect(Student.count).to eq 1 }
+      it_behaves_like 'private resource'
+    end
 
-    subject { Student.take }
-    its(:group_id)  { should eq group.id }
-    its(:user_id)   { should eq student_user.id }
+    context 'when authorized' do
+      include_context 'authorized admin'
+
+      before { post '/students.json', data }
+
+      it { expect(response).to be_success }
+      it { expect(Student.count).to eq 1 }
+
+      subject { Student.take }
+      its(:group_id)  { should eq group.id }
+      its(:user_id)   { should eq student_user.id }
+    end
   end
 
   describe 'GET /students' do
@@ -52,7 +62,7 @@ RSpec.describe 'Subjects API' do
   describe 'GET /students/:id' do
     describe 'existing student' do
       let!(:student_user) { students[0] }
-      let!(:student) { FactoryGirl.create :student, user: student_user }
+      let!(:student)      { FactoryGirl.create :student, user: student_user }
 
       before { get "/students/#{student_user.id}.json" }
 
@@ -71,12 +81,22 @@ RSpec.describe 'Subjects API' do
 
   describe 'PUT /student/:id' do
     let!(:student_user) { students[0] }
-    let!(:student) { FactoryGirl.create :student, user: student_user }
-    let!(:group) { FactoryGirl.create :group }
+    let!(:student)      { FactoryGirl.create :student, user: student_user }
+    let!(:group)        { FactoryGirl.create :group }
 
-    before { put "/students/#{student_user.id}.json", groupId: group.id }
+    context 'when unauthorized' do
+      before { put "/students/#{student_user.id}.json", groupId: group.id }
 
-    it { expect(response).to be_success }
-    it { expect(student.reload.group_id).to eq group.id }
+      it_behaves_like 'private resource'
+    end
+
+    context 'when authorized' do
+      include_context 'authorized admin'
+
+      before { put "/students/#{student_user.id}.json", groupId: group.id }
+
+      it { expect(response).to be_success }
+      it { expect(student.reload.group_id).to eq group.id }
+    end
   end
 end

@@ -1,4 +1,6 @@
 class LessonsController < ApplicationController
+  before_filter :require_admin, only: [:create, :update, :destroy]
+
   def index
     @lessons = Lesson.to_api
   end

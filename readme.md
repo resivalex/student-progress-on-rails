@@ -1,63 +1,64 @@
-Table of contents
+# Student progress
+
 - [JSON Rest API](#json-rest-api)
   - [HTTP status codes](#http-status-codes)
   - [/auditories](#auditories)
-    - [POST](#post)
-    - [GET](#get)
-    - [/:auditory_id](#auditory_id)
-      - [PUT](#put)
-      - [GET](#get)
-      - [DELETE](#delete)
+    - POST
+    - GET
+    - /:auditory_id
+      - PUT
+      - GET
+      - DELETE
   - [/groups](#groups)
-    - [POST](#post)
-    - [GET](#get)
-    - [/:group_id](#group_id)
-      - [PUT](#put)
-      - [DELETE](#delete)
-      - [/students](#students)
-        - [GET](#get)
+    - POST
+    - GET
+    - /:group_id
+      - PUT
+      - DELETE
+      - /students
+        - GET
   - [/lessons](#lessons)
-    - [POST](#post)
-    - [GET](#get)
-    - [/:lesson_id](#lesson_id)
-      - [PUT](#put)
-      - [GET](#get)
-      - [DELETE](#delete)
-      - [/students](#students)
-        - [GET](#get)
+    - POST
+    - GET
+    - /:lesson_id
+      - PUT
+      - GET
+      - DELETE
+      - /students
+        - GET
   - [/marks](#marks)
-    - [POST](#post-marks)
-    - [GET](#get-marks)
-    - [/:mark_id](#mark_id)
-      - [GET](#get)
-      - [/tracks](#tracks)
-        - [GET](#get)
+    - POST
+    - GET
+    - /:mark_id
+      - GET
+      - /tracks
+        - GET
   - [/students](#students)
-    - [POST](#post)
-    - [GET](#get)
-    - [/:student_id](#student_id)
-      - [GET](#get)
-      - [PUT](#put)
-      - [/marks](#marks)
-        - [GET](#get)
+    - POST
+    - GET
+    - /:student_id
+      - GET
+      - PUT
+      - /marks
+        - GET
   - [/subjects](#subjects)
-    - [POST](#post)
-    - [GET](#get)
-    - [/:subject_id](#subject_id)
-      - [PUT](#put)
-      - [GET](#get)
-      - [DELETE](#delete)
+    - POST
+    - GET
+    - /:subject_id
+      - PUT
+      - GET
+      - DELETE
   - [/teachers](#teachers)
-    - [GET](#get)
-    - [/:teacher_id](#teacher_id)
-      - [GET /marks](#marks)
+    - GET
+    - /:teacher_id
+      - GET
   - [/users](#users)
-    - [POST](#post-users)
-    - [GET](#get-users)
-    - [/:user_id](#user_id)
-      - [PUT](#put)
-      - [GET](#get)
-      - [DELETE](#delete)
+    - POST
+    - GET
+    - /:user_id
+      - PUT
+      - GET
+      - DELETE
 
 ## JSON Rest API
 
@@ -477,29 +478,18 @@ Table of contents
   ]
   ```
 
-- #### /:teacher_id
-  - #### /marks
+  - #### /:teacher_id
     - #### GET
-      Example request `GET /teachers/10/marks.json`
+      Example request `GET /teachers/10.json`
 
       Example result
       ```
-      [
-        {
-          "id": 55,
-          "mark": "4",
-          "comment": "Well",
-          "lessonId": 22,
-          "studentId": 5
-        },
-        {
-          "id": 56,
-          "mark": "н",
-          "comment": "Absent"
-          "lessonId": 27,
-          "studentId": 3
-        }
-      ]
+      {
+        "id": 10,
+        "firstName": "Valentin",
+        "lastName": "Gubarev",
+        "patronymic": "Yurjevich"
+      }
       ```
 
 ### /users
