@@ -28,7 +28,7 @@ RSpec.describe 'Teachers API' do
 
     context '2 teachers' do
       let!(:teachers) { FactoryGirl.create_list :teacher, 2 }
-      let!(:amdin) { FactoryGirl.create :admin }
+      let!(:admin) { FactoryGirl.create :admin }
 
       before { get '/teachers' }
 
