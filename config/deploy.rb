@@ -23,6 +23,8 @@ set :log_level, :debug
 # Default value for :pty is false
 set :pty, false
 
+set :rails_env, 'production'
+
 set :bundle_flags, '--deployment'
 
 # Default value for :linked_files is []

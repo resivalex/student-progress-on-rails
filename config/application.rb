@@ -23,7 +23,7 @@ module StudentProgressOnRails
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    # Probably useless line. Web console absent in production
+    # Probably useless line. Web console is absent in production.
     # config.web_console.development_only = false
 
     # Set Slim output
