@@ -57,16 +57,22 @@ end
 namespace :deploy do
   desc "Start the Unicorn process when it isn't already running."
   task :start do
-    execute :cd, "#{current_path} && #{current_path}/bin/unicorn -Dc #{current_path}/config/unicorn.rb -E #{rails_env}"
+    on_roles :all do
+      execute :cd, "#{current_path} && #{current_path}/bin/unicorn -Dc #{current_path}/config/unicorn.rb -E #{rails_env}"
+    end
   end
 
   desc "Initiate a rolling restart by telling Unicorn to start the new application code and kill the old process when done."
   task :restart do
-    execute :kill, "-USR2 $(cat #{shared_path}/unicorn.pid)"
+    on_roles :all do
+      execute :kill, "-USR2 $(cat #{shared_path}/unicorn.pid)"
+    end
   end
 
   desc "Stop the application by killing the Unicorn process"
   task :stop do
-    execute :kill, "$(cat #{shared_path}/unicorn.pid)"
+    on_roles :all do
+      execute :kill, "$(cat #{shared_path}/unicorn.pid)"
+    end
   end
 end
