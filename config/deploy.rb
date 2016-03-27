@@ -54,8 +54,6 @@ namespace :deploy do
 
 end
 
-require 'bundler/capistrano'
-
 namespace :deploy do
   desc "Start the Unicorn process when it isn't already running."
   task :start do
