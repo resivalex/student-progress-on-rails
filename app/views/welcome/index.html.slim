@@ -1,3 +1,11 @@
-p = flash[:message]
-| Welcome, somebody!
-a href='/login' Sign in
+- if flash[:message]
+  p = flash[:message]
+- if session[:user_id]
+  = render 'navigation'
+  = form_tag '/session', method: :delete
+    = submit_tag 'Log out'
+- else
+  = form_tag '/session'
+    = text_field_tag :email
+    = password_field_tag :password
+    = submit_tag

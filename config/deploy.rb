@@ -58,7 +58,6 @@ namespace :deploy do
   desc "Start the Unicorn process when it isn't already running."
   task :start do
     on roles :all do
-      current_path = '/var/www/student_progress/current'
       execute :cd, "#{current_path} && bundle exec unicorn -Dc #{current_path}/config/unicorn.rb -E #{fetch :rails_env}"
     end
   end
