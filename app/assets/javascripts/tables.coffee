@@ -1,5 +1,9 @@
 angular.module 'tablesApp', ['spRestApi', 'spDirectives']
 
+.config ($httpProvider) ->
+  authToken = $('meta[name="csrf-token"]').attr('content')
+  $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = authToken
+
 .filter 'ifEmpty', ->
   (input, defaultValue) ->
     if angular.isUndefined(input) || input == null || input == ''
@@ -58,9 +62,24 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
   $scope.rolesList = $.map ['admin', 'chief', 'student', 'teacher'], (role) ->
     id: role
     name: role
+
+  $scope.error = null
+  $scope.$on 'requestError', (event, error) ->
+    $scope.error = error
+
+  $scope.$on 'requestSuccess', ->
+    $scope.error = null
 ]
 
 .controller 'UserRowCtrl', ['$scope', 'Users', ($scope, Users) ->
+  $scope.error = null
+
+  onSuccess = ->
+    $scope.$emit 'usersChanged'
+
+  onError = (error) ->
+    $scope.$emit 'requestError', error
+
   $scope.turnOnEditMode = ->
     $scope.editMode = on
     $scope.e = $.extend {}, $scope.user
@@ -70,16 +89,15 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
 
   $scope.update = ->
     Users.update id: $scope.e.id, $scope.e, ->
-      $scope.editMode = off
-      $scope.$emit 'usersChanged'
+        $scope.editMode = off
+        onSuccess()
+      , onError
 
   $scope.add = ->
-    Users.save $scope.e, ->
-      $scope.$emit 'usersChanged'
+    Users.save $scope.e, onSuccess, onError
 
   $scope.delete = ->
-    Users.delete id: $scope.user.id, ->
-      $scope.$emit 'usersChanged'
+    Users.delete id: $scope.user.id, onSuccess, onError
 ]
 
 .controller 'StudentsCtrl', ['$scope', 'Students', ($scope, Students) ->
@@ -91,6 +109,13 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
 ]
 
 .controller 'LessonsCtrl', ['$scope', 'Lessons', ($scope, Lessons) ->
+
+  $scope.error = null
+  $scope.$on 'requestError', (event, error) ->
+    $scope.error = error
+
+  $scope.$on 'requestSuccess', ->
+    $scope.error = null
 
   $scope.date = new Date()
   $scope.time = (new Date()).setHours 15, 0, 0, 0
@@ -115,7 +140,10 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
     lesson.auditoryId = $scope.auditoryId
     lesson.datetime = datetime
     Lessons.save lesson, ->
-      $scope.$emit 'lessonsChanged'
+        $scope.$emit 'lessonsChanged'
+        $scope.$emit 'requestSuccess'
+      , (error) ->
+        $scope.$emit 'requestError', error
 ]
 
 .controller 'LessonRowCtrl', ['$scope', 'Lessons', ($scope, Lessons) ->
@@ -126,11 +154,16 @@ angular.module 'tablesApp', ['spRestApi', 'spDirectives']
   $scope.turnOffEditMode = ->
     $scope.editMode = off
 
+  onSuccess = ->
+    $scope.$emit 'lessonsChanged'
+    $scope.$emit 'requestSuccess'
+
+  onError = (error) ->
+    $scope.$emit 'requestError', error
+
   $scope.update = ->
-    Lessons.update id: $scope.lesson.id, $scope.e, ->
-      $scope.$emit 'lessonsChanged'
+    Lessons.update id: $scope.lesson.id, $scope.e, onSuccess, onError
 
   $scope.delete = ->
-    Lessons.delete id: $scope.lesson.id, ->
-      $scope.$emit 'lessonsChanged'
+    Lessons.delete id: $scope.lesson.id, onSuccess, onError
 ]

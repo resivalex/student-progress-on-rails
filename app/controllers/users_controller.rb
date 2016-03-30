@@ -8,16 +8,16 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_id params[:id]
     unless @user
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 
   def create
     user = User.new.from_api params
     if user.save
-      render plain: 'OK'
+      render nothing: true
     else
-      render json: user.errors, status: :bad_request
+      render_bad_request user.errors
     end
   end
 
@@ -26,12 +26,12 @@ class UsersController < ApplicationController
     if @user
       @user.from_api params
       if @user.save
-        render plain: 'OK'
+        render nothing: true
       else
-        render json: @user.errors, status: :bad_request
+        render_bad_request @user.errors
       end
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 
@@ -39,9 +39,9 @@ class UsersController < ApplicationController
     user = User.find_by_id params[:id]
     if user
       user.destroy
-      render plain: 'OK'
+      render nothing: true
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 

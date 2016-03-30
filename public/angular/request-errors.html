@@ -1,0 +1,6 @@
+<div class="errors" ng-show="error">
+  <p>{{error.status}}: {{error.statusText}}</p>
+  <ul><li ng-repeat="(name, list) in error.data.errors">{{name}}
+    <ul><li ng-repeat="item in list">{{item}}</li></ul>
+  </li></ul>
+</div>

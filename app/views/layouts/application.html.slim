@@ -9,4 +9,8 @@ head
   = csrf_meta_tags
 
 body
+  - if flash[:message]
+    p.bg-info.flash-message = flash[:message]
+  - if session[:user_id]
+    = render 'navigation'
   = yield

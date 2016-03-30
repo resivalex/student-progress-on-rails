@@ -1,5 +1,10 @@
-ul
+ul.nav.nav-pills
   li
-    a href="/tables" Tables
+    a href="/" Главная
   li
-    a href="/teacher" Marks
+    a href="/tables" Таблицы
+  li
+    a href="/teacher" Отметки
+  li.log-out
+    = form_tag '/session', method: :delete
+      = submit_tag 'Log out', class: 'btn btn-primary'

@@ -1,63 +1,63 @@
 angular.module 'spDirectives', ['ui.bootstrap']
 
 angular.module 'spDirectives'
-.directive 'spResourceTable', ['$injector', ($injector) ->
-  restrict: 'E'
-  scope:
-    spF: '&spFields'
-    spGetF: '&spGetFields'
+# .directive 'spResourceTable', ['$injector', ($injector) ->
+#   restrict: 'E'
+#   scope:
+#     spF: '&spFields'
+#     spGetF: '&spGetFields'
 
-  templateUrl: '/angular/resource-table.html'
-  link: (scope, element, attrs) ->
-    Resource = $injector.get attrs.spResource
-    resource = new Resource()
+#   templateUrl: '/angular/resource-table.html'
+#   link: (scope, element, attrs) ->
+#     Resource = $injector.get attrs.spResource
+#     resource = new Resource()
 
-    scope.header = attrs.spResource
-    scope.fields = scope.spF()
-    scope.getFields = scope.spGetF()
-    scope.getFields ?= scope.fields
+#     scope.header = attrs.spResource
+#     scope.fields = scope.spF()
+#     scope.getFields = scope.spGetF()
+#     scope.getFields ?= scope.fields
 
-    scope.adding = []
-    scope.adding[i] = i for i in scope.fields
+#     scope.adding = []
+#     scope.adding[i] = i for i in scope.fields
 
-    scope.turnOnEditMode = (index) -> scope.resources[index].editMode = true
-    scope.turnOffEditMode = (index) -> scope.resources[index].editMode = false
-    scope.inEditMode = (index) -> scope.resources[index].editMode
+#     scope.turnOnEditMode = (index) -> scope.resources[index].editMode = true
+#     scope.turnOffEditMode = (index) -> scope.resources[index].editMode = false
+#     scope.inEditMode = (index) -> scope.resources[index].editMode
 
-    refreshList = ->
-      scope.resources = Resource.query()
+#     refreshList = ->
+#       scope.resources = Resource.query()
 
-    clearErrors = ->
-      scope.errorCode = null
-      scope.errors = null
+#     clearErrors = ->
+#       scope.errorCode = null
+#       scope.errors = null
 
-    showErrors = (response) ->
-      scope.errorCode = "#{response.status}: #{response.statusText}"
-      scope.errors = response.data
+#     showErrors = (response) ->
+#       scope.errorCode = "#{response.status}: #{response.statusText}"
+#       scope.errors = response.data
 
-    scope.saveResource = ->
-      resource[i] = scope.adding[i] for i in scope.fields
+#     scope.saveResource = ->
+#       resource[i] = scope.adding[i] for i in scope.fields
 
-      Resource.save resource, refreshList
-      .$promise
-      .then clearErrors
-      .catch showErrors
+#       Resource.save resource, refreshList
+#       .$promise
+#       .then clearErrors
+#       .catch showErrors
 
-    scope.updateResource = (index) ->
-      a = scope.resources[index]
-      Resource.update id: a.id, a, refreshList
-      .$promise
-      .then clearErrors
-      .catch showErrors
+#     scope.updateResource = (index) ->
+#       a = scope.resources[index]
+#       Resource.update id: a.id, a, refreshList
+#       .$promise
+#       .then clearErrors
+#       .catch showErrors
 
-    scope.deleteResource = (index) ->
-      Resource.delete id: scope.resources[index].id, refreshList
-      .$promise
-      .then clearErrors
-      .catch showErrors
+#     scope.deleteResource = (index) ->
+#       Resource.delete id: scope.resources[index].id, refreshList
+#       .$promise
+#       .then clearErrors
+#       .catch showErrors
 
-    refreshList()
-]
+#     refreshList()
+# ]
 
 .directive 'spObjectsTable', ->
   restrict: 'E'
@@ -110,22 +110,34 @@ angular.module 'spDirectives'
   link: (scope, element, attrs) ->
     Resource = $injector.get attrs.resource
     scope.objects = Resource.query()
+    scope.error = null
+
+    onSuccess = ->
+      scope.objects = Resource.query()
+      scope.error = null
+
+    onError = (error) ->
+      scope.error = error
 
     scope.update = (id, name, description) ->
       Resource.update id: id,
           name: name
           description: description
-        ,
-          scope.objects = Resource.query()
+        , onSuccess, onError
 
     scope.add = (name, description) ->
       Resource.save
           name: name
           description: description
-        , ->
-          scope.objects = Resource.query()
+        , onSuccess, onError
 
     scope.delete = (id) ->
-      Resource.delete id: id, ->
-        scope.objects = Resource.query()
+      Resource.delete id: id, onSuccess, onError
 ]
+
+.directive 'spRequestErrors', ->
+  restrict: 'E'
+  scope: {
+    error: '=ngModel'
+  }
+  templateUrl: '/angular/request-errors.html'

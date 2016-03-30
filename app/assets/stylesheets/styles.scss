@@ -1,0 +1,28 @@
+.nav .log-out {
+  float: right;
+}
+
+.flash-message {
+  padding: 10px;
+  text-align: center;
+}
+
+.login-form {
+  margin: 50px auto;
+
+  a {
+    cursor: pointer;
+    display: block;
+    padding: 2px 5px;
+    text-align: center;
+  }
+}
+
+.readme {
+  font-size: 20px;
+  width: 80%;
+
+  h1 {
+    text-align: center;
+  }
+}

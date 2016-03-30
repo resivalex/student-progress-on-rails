@@ -1,4 +1,4 @@
-RSpec.describe LoginController do
+RSpec.describe 'Authorization' do
   let(:email)     { 'mail@example.com' }
   let(:password)  { 'pa55w0rD' }
   let!(:user)     { FactoryGirl.create :user, email: email, password: password }

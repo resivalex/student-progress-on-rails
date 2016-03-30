@@ -8,16 +8,16 @@ class LessonsController < ApplicationController
   def show
     @lesson = Lesson.find_by_id(params[:id]).rich_struct
     unless @lesson
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 
   def create
     lesson = Lesson.new.from_api params
     if lesson.save
-      render plain: 'OK'
+      render nothing: true
     else
-      render json: lesson.errors, status: :bad_request
+      render_bad_request lesson.errors
     end
   end
 
@@ -26,12 +26,12 @@ class LessonsController < ApplicationController
     if lesson
       lesson.from_api params
       if lesson.save
-        render plain: 'OK'
+        render nothing: true
       else
-        render json: lesson.errors, status: :bad_request
+        render_bad_request lesson.errors
       end
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 
@@ -39,9 +39,9 @@ class LessonsController < ApplicationController
     lesson = Lesson.find_by_id params[:id]
     if lesson
       lesson.destroy
-      render plain: 'OK'
+      render nothing: true
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 end

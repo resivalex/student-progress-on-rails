@@ -1,11 +1,12 @@
-- if flash[:message]
-  p = flash[:message]
 - if session[:user_id]
-  = render 'navigation'
-  = form_tag '/session', method: :delete
-    = submit_tag 'Log out'
+  = render 'readme'
 - else
-  = form_tag '/session'
-    = text_field_tag :email
-    = password_field_tag :password
-    = submit_tag
+  .login-form.col-xs-12.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4
+    = form_tag '/session'
+      = text_field_tag :email, nil, placeholder: 'E-mail', class: 'form-control email text-center'
+      = password_field_tag :password, nil, placeholder: 'Пароль', class: 'form-control password text-center'
+      = submit_tag 'Войти', class: 'form-control btn btn-primary'
+    a.as-admin как администратор
+    a.as-teacher как преподаватель
+    a.as-student как студент
+    a.as-chief как начальник

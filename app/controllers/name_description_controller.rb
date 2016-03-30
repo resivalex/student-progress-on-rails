@@ -15,7 +15,7 @@ module NameDescriptionController
     if @object
       render 'name_description/show'
     else
-      render plain: 'Not found'
+      render_not_found
     end
   end
 
@@ -23,9 +23,9 @@ module NameDescriptionController
     object = model.new.from_api params
 
     if object.save
-      render plain: 'OK'
+      render nothing: true
     else
-      render json: object.errors, status: :bad_request
+      render_bad_request object.errors
     end
   end
 
@@ -35,12 +35,12 @@ module NameDescriptionController
       object.from_api params
 
       if object.save
-        render plain: 'OK'
+        render nothing: true
       else
-        render json: object.errors, status: :bad_request
+        render_bad_request object.errors
       end
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 
@@ -48,9 +48,9 @@ module NameDescriptionController
     object = model.find_by_id params[:id]
     if object
       object.destroy
-      render plain: 'OK'
+      render nothing: true
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 

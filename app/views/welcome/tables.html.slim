@@ -12,6 +12,7 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
       sp-name-description resource="Subjects"
     uib-tab heading="Пользователи"
       div ng-controller="UsersCtrl"
+        sp-request-errors ng-model="error"
         table.table
           tr
             th
@@ -109,6 +110,7 @@ div ng-app="tablesApp" ng-controller="TablesCtrl"
 
     uib-tab heading="Заняния"
       div ng-controller="LessonsCtrl"
+        sp-request-errors ng-model="error"
         table class="table"
           tr
             th

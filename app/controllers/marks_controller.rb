@@ -3,9 +3,9 @@ class MarksController < ApplicationController
 
   def create
     if Mark.add params
-      render plain: 'OK'
+      render nothing: true
     else
-      render plain: 'Bad request', status: :bad_request
+      render_bad_request
     end
   end
 
@@ -14,7 +14,7 @@ class MarksController < ApplicationController
     if mark
       @mark = OpenStruct.new mark.to_api
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 

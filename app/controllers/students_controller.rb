@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
       if Group.exists? group_id
         @students = User.students_by_group group_id
       else
-        render plain: 'Not found', status: :not_found
+        render_not_found
       end
     elsif lesson_id
       @students = Student.students_by_lesson_to_api lesson_id
@@ -23,24 +23,24 @@ class StudentsController < ApplicationController
       s.group_id = params[:groupId]
     end
     if student.save
-      render plain: 'OK'
+      render nothing: true
     else
-      render plain: 'Bad request', status: :bad_request
+      render_bad_request student.errors
     end
   end
 
   def show
     @student = Student.by_id_to_api params[:id]
     unless @student
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 
   def update
     if Student.reassign params[:id], params[:groupId]
-      render plain: 'OK'
+      render nothing: true
     else
-      render plain: 'Bad request', status: :bad_request
+      render_bad_request
     end
   end
 end

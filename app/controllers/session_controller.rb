@@ -4,19 +4,19 @@ class SessionController < ApplicationController
     if user && user.authenticate(params[:password])
       flash[:message] = 'Welcome!'
       session[:user_id] = user.id
-      redirect_to '/'
+      redirect_to root_path
     else
       flash[:message] = 'You are wrong. Try again.'
-      render nothing: true
+      redirect_to root_path
     end
   end
 
   def destroy
     if session[:user_id]
       session[:user_id] = nil
-      redirect_to '/'
+      redirect_to root_path
     else
-      render plain: 'Not found', status: :not_found
+      render_not_found
     end
   end
 end
